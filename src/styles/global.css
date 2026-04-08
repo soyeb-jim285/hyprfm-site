@@ -1,0 +1,174 @@
+/* Self-hosted fonts via Fontsource — no Google Fonts call-home. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-base text-text font-sans;
+    font-feature-settings: "cv11", "ss01", "ss03";
+  }
+
+  /* Keep code blocks tight and readable */
+  code, pre, kbd, samp {
+    @apply font-mono;
+  }
+
+  /* Focus rings that match the theme */
+  :focus-visible {
+    @apply outline-none ring-2 ring-mauve ring-offset-2 ring-offset-base;
+  }
+
+  /* Selection uses the theme accent */
+  ::selection {
+    background: theme('colors.mauve');
+    color: theme('colors.base');
+  }
+
+  /* Scrollbar styling (webkit only, harmless fallback elsewhere) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme('colors.crust');
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.surface1');
+    border-radius: 10px;
+    border: 2px solid theme('colors.crust');
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.surface2');
+  }
+}
+
+@layer components {
+  /* Gradient text used for the wordmark */
+  .text-gradient {
+    background: linear-gradient(135deg, theme('colors.mauve') 0%, theme('colors.blue') 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Soft panel background used throughout */
+  .panel {
+    @apply bg-mantle/60 backdrop-blur-sm border border-surface0/60 rounded-2xl;
+  }
+
+  /* Subtle gradient border on hover */
+  .card {
+    @apply relative bg-mantle/80 border border-surface0 rounded-2xl p-6 transition-all duration-300;
+  }
+  .card:hover {
+    @apply border-surface2 -translate-y-0.5;
+    box-shadow: 0 12px 40px -20px rgba(137, 180, 250, 0.25);
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-3 rounded-xl font-medium text-base
+           bg-mauve text-base
+           transition-all duration-200
+           hover:bg-lavender hover:scale-[1.02]
+           active:scale-[0.98]
+           focus-visible:ring-offset-2;
+  }
+
+  /* Secondary (outline) button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-3 rounded-xl font-medium text-base
+           bg-surface0/40 text-text border border-surface1
+           transition-all duration-200
+           hover:bg-surface0 hover:border-surface2
+           active:scale-[0.98];
+  }
+
+  /* Code block wrapper */
+  .code-block {
+    @apply relative bg-crust border border-surface0 rounded-xl p-4 font-mono text-sm overflow-x-auto;
+  }
+
+  /* Section padding helpers */
+  .section {
+    @apply py-24 md:py-32;
+  }
+  .container-narrow {
+    @apply mx-auto max-w-6xl px-6;
+  }
+}
+
+@layer utilities {
+  /* Scroll reveal: hidden initially, animates in when .is-visible is added */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 80ms; }
+  .reveal-delay-2 { transition-delay: 160ms; }
+  .reveal-delay-3 { transition-delay: 240ms; }
+  .reveal-delay-4 { transition-delay: 320ms; }
+  .reveal-delay-5 { transition-delay: 400ms; }
+  .reveal-delay-6 { transition-delay: 480ms; }
+
+  /* Background dot grid overlay — subtle texture for the hero */
+  .dot-grid {
+    background-image: radial-gradient(theme('colors.surface1') 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  /* Gradient orbs for the hero background */
+  .orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animate-float-slow {
+    animation: none !important;
+  }
+}

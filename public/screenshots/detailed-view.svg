@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Placeholder for Detailed view">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e2e"/>
+      <stop offset="100%" stop-color="#11111b"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="1.4" fill="#313244"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#dots)"/>
+  <g text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" fill="#6c7086">
+    <text x="50%" y="47%" font-size="42" font-weight="600">TODO(jim): replace detailed-view.svg</text>
+    <text x="50%" y="54%" font-size="28">1920 × 1080 · Detailed view</text>
+  </g>
+  <rect x="16" y="16" width="1920" height="1080" stroke="#313244" stroke-width="2" fill="none" transform="translate(-16 -16)"/>
+</svg>

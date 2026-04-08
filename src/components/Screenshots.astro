@@ -1,0 +1,56 @@
+---
+// TODO(jim): replace SVG placeholders in public/screenshots/ with real PNGs.
+// Captions below are placeholder — rewrite to your voice.
+const shots = [
+  {
+    src: '/screenshots/grid-view.svg',
+    alt: 'Grid view of a Pictures folder with image thumbnails',
+    caption: 'Grid view. Ctrl+Scroll to zoom icon size.',
+  },
+  {
+    src: '/screenshots/miller-view.svg',
+    alt: 'Miller column view showing parent, current, and preview columns',
+    caption: 'Miller columns. The macOS Finder favorite, keyboard-driven.',
+  },
+  {
+    src: '/screenshots/quick-preview.svg',
+    alt: 'Quick preview overlay showing an image with a metadata sidebar',
+    caption: 'Space bar opens a full preview with metadata.',
+  },
+  {
+    src: '/screenshots/settings.svg',
+    alt: 'Settings panel with theme, font, and shortcut controls',
+    caption: 'Live-reloading settings panel. Themes, fonts, shortcuts.',
+  },
+];
+---
+
+<section id="screenshots" class="section bg-mantle/40 relative">
+  <div class="container-narrow">
+    <div class="max-w-2xl mb-14 reveal">
+      <span class="text-sm font-medium text-mauve tracking-wider uppercase">Screenshots</span>
+      <h2 class="mt-3 text-hero font-bold">See it in action.</h2>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {shots.map((shot, i) => (
+        <figure class:list={['group reveal', `reveal-delay-${(i % 4) + 1}`]}>
+          <div class="panel overflow-hidden relative">
+            <div class="flex items-center gap-1.5 px-4 py-3 border-b border-surface0/80 bg-mantle/60">
+              <span class="size-2.5 rounded-full bg-red/60"></span>
+              <span class="size-2.5 rounded-full bg-yellow/60"></span>
+              <span class="size-2.5 rounded-full bg-green/60"></span>
+            </div>
+            <img
+              src={shot.src}
+              alt={shot.alt}
+              class="w-full h-auto aspect-[16/10] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="mt-4 text-sm text-subtext0 text-center">{shot.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

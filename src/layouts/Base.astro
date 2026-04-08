@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'HyprFM — Lightweight Qt6/QML file manager for Hyprland',
+  description = 'A fast, keyboard-driven file manager for Hyprland and other Wayland compositors. Grid, detailed and Miller column views, live previews, tabs, fd-powered search, TOML themes.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href="/hyprfm.svg" />
+    <link rel="canonical" href={Astro.site?.toString()} />
+
+    {/* Open Graph / Twitter cards */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.site?.toString()} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/hyprfm.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/hyprfm.svg" />
+  </head>
+  <body class="min-h-screen antialiased">
+    <slot />
+
+    {/* Scroll-reveal: toggle `.is-visible` on any `.reveal` element when it
+        enters the viewport. Uses IntersectionObserver so it's cheap and
+        accessible (respects prefers-reduced-motion in CSS). */}
+    <script is:inline>
+      (function () {
+        if (!('IntersectionObserver' in window)) {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      })();
+    </script>
+  </body>
+</html>

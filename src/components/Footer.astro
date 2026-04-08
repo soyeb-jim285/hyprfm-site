@@ -1,0 +1,25 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-surface0/60 bg-mantle/40">
+  <div class="container-narrow py-12">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+      <div class="flex items-center gap-3">
+        <img src="/hyprfm.svg" alt="" width="28" height="28" />
+        <div>
+          <div class="font-semibold">HyprFM</div>
+          <div class="text-sm text-subtext0">MIT · © {year} Soyeb Pervez Jim</div>
+        </div>
+      </div>
+
+      <nav class="flex flex-wrap gap-x-6 gap-y-3 text-sm text-subtext1">
+        <a href="https://github.com/soyeb-jim285/hyprfm" rel="noopener" class="hover:text-text transition-colors">GitHub</a>
+        <a href="https://github.com/soyeb-jim285/hyprfm/releases" rel="noopener" class="hover:text-text transition-colors">Releases</a>
+        <a href="https://github.com/soyeb-jim285/hyprfm/issues" rel="noopener" class="hover:text-text transition-colors">Issues</a>
+        <a href="https://aur.archlinux.org/packages/hyprfm-git" rel="noopener" class="hover:text-text transition-colors">AUR</a>
+        <a href="https://flatpak.hyprfm.soyebjim.me/" rel="noopener" class="hover:text-text transition-colors">Flatpak repo</a>
+      </nav>
+    </div>
+  </div>
+</footer>
