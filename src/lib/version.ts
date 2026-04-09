@@ -15,6 +15,6 @@ export async function getLatestVersion(): Promise<string> {
     return cached;
   } catch (e) {
     console.warn("Failed to fetch latest version, falling back:", e);
-    return "v0.4.15";
+    return "v0.4.19";
   }
 }
