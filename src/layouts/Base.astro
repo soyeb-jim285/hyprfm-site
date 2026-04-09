@@ -21,10 +21,16 @@ const {
     {/* Apply theme class before first paint to avoid flash */}
     <script is:inline>
       (function () {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
         var stored = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var dark = stored === 'dark' || (!stored && prefersDark);
+        var dark = stored === 'dark' || (!stored && mq.matches);
         document.documentElement.classList.toggle('dark', dark);
+        // Follow system theme changes when user hasn't manually overridden
+        mq.addEventListener('change', function (e) {
+          if (!localStorage.getItem('theme')) {
+            document.documentElement.classList.toggle('dark', e.matches);
+          }
+        });
       })();
     </script>
     <title>{title}</title>
