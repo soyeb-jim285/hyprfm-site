@@ -29,13 +29,6 @@ chmod +x HyprFM-*.AppImage
 ./HyprFM-*.AppImage`,
   },
   {
-    id: 'deb',
-    label: 'Debian / Ubuntu',
-    blurb: 'Tested on Ubuntu 24.04.',
-    code: `# Download hyprfm_*_amd64.deb from the latest release
-sudo apt install ./hyprfm_*_amd64.deb`,
-  },
-  {
     id: 'source',
     label: 'Source',
     blurb: 'Requires Qt6, CMake, Ninja. Submodules must be fetched.',
@@ -54,7 +47,7 @@ cmake --build build --parallel
       <span class="text-sm font-medium text-mauve tracking-wider uppercase">Install</span>
       <h2 class="mt-3 text-hero font-bold">Pick your distribution.</h2>
       <p class="mt-4 text-subtext1 text-lg">
-        Five supported install paths. Flatpak is the recommended option for
+        Four supported install paths. Flatpak is the recommended option for
         non-Arch systems — it ships everything HyprFM needs in a single
         sandboxed package.
       </p>

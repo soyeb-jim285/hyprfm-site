@@ -1,37 +1,41 @@
 /** @type {import('tailwindcss').Config} */
+
+/** Helper: reference a CSS custom property as an rgb() color with Tailwind
+ *  opacity-modifier support (e.g. `bg-base/60`). */
+const v = (name) => `rgb(var(--color-${name}) / <alpha-value>)`;
+
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  darkMode: 'class',
   theme: {
     extend: {
-      // Catppuccin Mocha palette — matches HyprFM's default theme so the
-      // website and the app feel like the same product.
       colors: {
-        base: '#1e1e2e',
-        mantle: '#181825',
-        crust: '#11111b',
-        surface0: '#313244',
-        surface1: '#45475a',
-        surface2: '#585b70',
-        overlay0: '#6c7086',
-        overlay1: '#7f849c',
-        overlay2: '#9399b2',
-        subtext0: '#a6adc8',
-        subtext1: '#bac2de',
-        text: '#cdd6f4',
-        lavender: '#b4befe',
-        blue: '#89b4fa',
-        sapphire: '#74c7ec',
-        sky: '#89dceb',
-        teal: '#94e2d5',
-        green: '#a6e3a1',
-        yellow: '#f9e2af',
-        peach: '#fab387',
-        maroon: '#eba0ac',
-        red: '#f38ba8',
-        mauve: '#cba6f7',
-        pink: '#f5c2e7',
-        flamingo: '#f2cdcd',
-        rosewater: '#f5e0dc',
+        base:      v('base'),
+        mantle:    v('mantle'),
+        crust:     v('crust'),
+        surface0:  v('surface0'),
+        surface1:  v('surface1'),
+        surface2:  v('surface2'),
+        overlay0:  v('overlay0'),
+        overlay1:  v('overlay1'),
+        overlay2:  v('overlay2'),
+        subtext0:  v('subtext0'),
+        subtext1:  v('subtext1'),
+        text:      v('text'),
+        lavender:  v('lavender'),
+        blue:      v('blue'),
+        sapphire:  v('sapphire'),
+        sky:       v('sky'),
+        teal:      v('teal'),
+        green:     v('green'),
+        yellow:    v('yellow'),
+        peach:     v('peach'),
+        maroon:    v('maroon'),
+        red:       v('red'),
+        mauve:     v('mauve'),
+        pink:      v('pink'),
+        flamingo:  v('flamingo'),
+        rosewater: v('rosewater'),
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

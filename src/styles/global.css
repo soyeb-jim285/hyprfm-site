@@ -11,8 +11,66 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Catppuccin Latte (light) ────────────────────────────────── */
   :root {
+    color-scheme: light;
+    --color-base:      239 241 245;
+    --color-mantle:    230 233 239;
+    --color-crust:     220 224 232;
+    --color-surface0:  204 208 218;
+    --color-surface1:  188 192 204;
+    --color-surface2:  172 176 190;
+    --color-overlay0:  156 160 176;
+    --color-overlay1:  140 143 161;
+    --color-overlay2:  124 127 147;
+    --color-subtext0:  108 111 133;
+    --color-subtext1:  92 95 119;
+    --color-text:      76 79 105;
+    --color-lavender:  114 135 253;
+    --color-blue:      30 102 245;
+    --color-sapphire:  32 159 181;
+    --color-sky:       4 165 229;
+    --color-teal:      23 146 153;
+    --color-green:     64 160 43;
+    --color-yellow:    223 142 29;
+    --color-peach:     254 100 11;
+    --color-maroon:    230 69 83;
+    --color-red:       210 15 57;
+    --color-mauve:     136 57 239;
+    --color-pink:      234 118 203;
+    --color-flamingo:  221 120 120;
+    --color-rosewater: 220 138 120;
+  }
+
+  /* ── Catppuccin Mocha (dark) ─────────────────────────────────── */
+  .dark {
     color-scheme: dark;
+    --color-base:      30 30 46;
+    --color-mantle:    24 24 37;
+    --color-crust:     17 17 27;
+    --color-surface0:  49 50 68;
+    --color-surface1:  69 71 90;
+    --color-surface2:  88 91 112;
+    --color-overlay0:  108 112 134;
+    --color-overlay1:  127 132 156;
+    --color-overlay2:  147 153 178;
+    --color-subtext0:  166 173 200;
+    --color-subtext1:  186 194 222;
+    --color-text:      205 214 244;
+    --color-lavender:  180 190 254;
+    --color-blue:      137 180 250;
+    --color-sapphire:  116 199 236;
+    --color-sky:       137 220 235;
+    --color-teal:      148 226 213;
+    --color-green:     166 227 161;
+    --color-yellow:    249 226 175;
+    --color-peach:     250 179 135;
+    --color-maroon:    235 160 172;
+    --color-red:       243 139 168;
+    --color-mauve:     203 166 247;
+    --color-pink:      245 194 231;
+    --color-flamingo:  242 205 205;
+    --color-rosewater: 245 224 220;
   }
 
   html {
@@ -39,8 +97,8 @@
 
   /* Selection uses the theme accent */
   ::selection {
-    background: theme('colors.mauve');
-    color: theme('colors.base');
+    background: rgb(var(--color-mauve));
+    color: rgb(var(--color-base));
   }
 
   /* Scrollbar styling (webkit only, harmless fallback elsewhere) */
@@ -49,22 +107,22 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: theme('colors.crust');
+    background: rgb(var(--color-crust));
   }
   ::-webkit-scrollbar-thumb {
-    background: theme('colors.surface1');
+    background: rgb(var(--color-surface1));
     border-radius: 10px;
-    border: 2px solid theme('colors.crust');
+    border: 2px solid rgb(var(--color-crust));
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: theme('colors.surface2');
+    background: rgb(var(--color-surface2));
   }
 }
 
 @layer components {
   /* Gradient text used for the wordmark */
   .text-gradient {
-    background: linear-gradient(135deg, theme('colors.mauve') 0%, theme('colors.blue') 100%);
+    background: linear-gradient(135deg, rgb(var(--color-mauve)) 0%, rgb(var(--color-blue)) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -81,7 +139,7 @@
   }
   .card:hover {
     @apply border-surface2 -translate-y-0.5;
-    box-shadow: 0 12px 40px -20px rgba(137, 180, 250, 0.25);
+    box-shadow: 0 12px 40px -20px rgb(var(--color-blue) / 0.25);
   }
 
   /* Primary CTA button */
@@ -140,7 +198,7 @@
 
   /* Background dot grid overlay — subtle texture for the hero */
   .dot-grid {
-    background-image: radial-gradient(theme('colors.surface1') 1px, transparent 1px);
+    background-image: radial-gradient(rgb(var(--color-surface1)) 1px, transparent 1px);
     background-size: 24px 24px;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
   }
@@ -152,6 +210,12 @@
     filter: blur(64px);
     opacity: 0.35;
     pointer-events: none;
+  }
+  .dark .orb {
+    opacity: 0.35;
+  }
+  :root:not(.dark) .orb {
+    opacity: 0.2;
   }
 }
 
