@@ -1,5 +1,7 @@
 ---
-// TODO(jim): edit the tagline and CTA button labels below to your voice.
+import { getLatestVersion } from "../lib/version";
+
+const version = await getLatestVersion();
 const tagline = "A fast, keyboard-driven file manager for Hyprland and other Wayland compositors.";
 ---
 
@@ -40,7 +42,7 @@ const tagline = "A fast, keyboard-driven file manager for Hyprland and other Way
         <div class="reveal">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface0/60 border border-surface1 text-xs font-medium text-subtext1 mb-6">
             <span class="size-1.5 rounded-full bg-green animate-pulse"></span>
-            v0.4.14 available
+            {version} available
           </div>
         </div>
 

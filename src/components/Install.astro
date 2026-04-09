@@ -1,6 +1,7 @@
 ---
-// All commands are factual — no TODO(jim) needed. Edit if any command
-// changes in the future (e.g. Flatpak URL moves again).
+import { getLatestVersion } from "../lib/version";
+
+const version = await getLatestVersion();
 const tabs = [
   {
     id: 'flatpak',
@@ -23,7 +24,7 @@ flatpak install --user hyprfm io.github.soyeb_jim285.HyprFM`,
     id: 'appimage',
     label: 'AppImage',
     blurb: 'Fully self-contained, no system Qt needed.',
-    code: `wget https://github.com/soyeb-jim285/hyprfm/releases/latest/download/HyprFM-v0.4.14-x86_64.AppImage
+    code: `wget https://github.com/soyeb-jim285/hyprfm/releases/latest/download/HyprFM-${version}-x86_64.AppImage
 chmod +x HyprFM-*.AppImage
 ./HyprFM-*.AppImage`,
   },
