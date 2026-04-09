@@ -108,7 +108,7 @@ cmake --build build --parallel
 </section>
 
 <script is:inline>
-  // Tab switching
+  // Tab switching with fade-slide animation
   document.querySelectorAll('[data-install-tabs]').forEach((root) => {
     const buttons = root.querySelectorAll('[data-tab]');
     const panels = root.querySelectorAll('[data-panel]');
@@ -121,7 +121,14 @@ cmake --build build --parallel
           b.setAttribute('aria-selected', active ? 'true' : 'false');
         });
         panels.forEach((p) => {
-          p.hidden = p.getAttribute('data-panel') !== id;
+          const show = p.getAttribute('data-panel') === id;
+          p.hidden = !show;
+          if (show) {
+            p.classList.remove('tab-enter');
+            // Force reflow so the animation restarts
+            void p.offsetWidth;
+            p.classList.add('tab-enter');
+          }
         });
       });
     });
