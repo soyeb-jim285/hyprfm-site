@@ -1,56 +1,54 @@
 ---
-// TODO(jim): replace SVG placeholders in public/screenshots/ with real PNGs.
-// Captions below are placeholder — rewrite to your voice.
-const shots = [
-  {
-    src: '/screenshots/grid-view.svg',
-    alt: 'Grid view of a Pictures folder with image thumbnails',
-    caption: 'Grid view. Ctrl+Scroll to zoom icon size.',
-  },
-  {
-    src: '/screenshots/miller-view.svg',
-    alt: 'Miller column view showing parent, current, and preview columns',
-    caption: 'Miller columns. The macOS Finder favorite, keyboard-driven.',
-  },
-  {
-    src: '/screenshots/quick-preview.svg',
-    alt: 'Quick preview overlay showing an image with a metadata sidebar',
-    caption: 'Space bar opens a full preview with metadata.',
-  },
-  {
-    src: '/screenshots/settings.svg',
-    alt: 'Settings panel with theme, font, and shortcut controls',
-    caption: 'Live-reloading settings panel. Themes, fonts, shortcuts.',
-  },
+const views = [
+  { id: 'grid', key: 'Ctrl 1', name: 'Grid', title: 'Visual when you need it.', body: 'Scan folders, images, and documents at a glance. Resize the grid with Ctrl+Scroll and move naturally with arrow keys.', src: '/screenshots/grid-view.png', alt: 'HyprFM Grid view with folders and project files' },
+  { id: 'miller', key: 'Ctrl 2', name: 'Miller', title: 'Context in every column.', body: 'Move through deep trees while keeping parent folders and a syntax-highlighted file preview in view.', src: '/screenshots/miller-view.png', alt: 'HyprFM Miller view with three columns and source preview' },
+  { id: 'preview', key: 'Space', name: 'Quick Preview', title: 'Open less. Know more.', body: 'Inspect a file and its metadata in place, then browse nearby items with the arrow keys.', src: '/screenshots/quick-preview.png', alt: 'HyprFM Quick Preview showing an image and detailed metadata' },
 ];
 ---
 
-<section id="screenshots" class="section bg-mantle/40 relative">
-  <div class="container-narrow">
-    <div class="max-w-2xl mb-14 reveal">
-      <span class="text-sm font-medium text-mauve tracking-wider uppercase">Screenshots</span>
-      <h2 class="mt-3 text-hero font-bold">See it in action.</h2>
+<section id="showcase" class="section overflow-hidden border-b border-surface0 bg-mantle/40">
+  <div class="shell">
+    <div class="mb-14 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+      <div class="reveal"><p class="eyebrow mb-5">Two views · one quick preview</p><h2 class="text-[clamp(2.7rem,6vw,5.6rem)] font-semibold leading-[0.95] tracking-[-0.06em]">Choose your focus.</h2></div>
+      <div class="flex flex-wrap border border-surface1 reveal" role="tablist" aria-label="HyprFM views">
+        {views.map((view, index) => <button type="button" role="tab" data-view-tab={view.id} data-active={index === 0 ? 'true' : 'false'} aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`view-${view.id}`} tabindex={index === 0 ? 0 : -1} class="border-r border-surface1 px-4 py-3 text-sm text-subtext0 transition last:border-r-0 hover:text-text data-[active=true]:bg-text data-[active=true]:text-base">{view.name}</button>)}
+      </div>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-2">
-      {shots.map((shot, i) => (
-        <figure class:list={['group reveal', `reveal-delay-${(i % 4) + 1}`]}>
-          <div class="panel overflow-hidden relative">
-            <div class="flex items-center gap-1.5 px-4 py-3 border-b border-surface0/80 bg-mantle/60">
-              <span class="size-2.5 rounded-full bg-red/60"></span>
-              <span class="size-2.5 rounded-full bg-yellow/60"></span>
-              <span class="size-2.5 rounded-full bg-green/60"></span>
-            </div>
-            <img
-              src={shot.src}
-              alt={shot.alt}
-              class="w-full h-auto aspect-[16/10] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              loading="lazy"
-            />
+    <div class="reveal" data-view-showcase>
+      {views.map((view, index) => (
+        <article id={`view-${view.id}`} data-view-panel={view.id} role="tabpanel" hidden={index !== 0}>
+          <div class="window">
+            <div class="window-bar justify-between"><span class="font-mono text-[0.65rem] text-overlay0">VIEW / {view.name.toUpperCase()}</span><span class="key">{view.key}</span></div>
+            <img src={view.src} alt={view.alt} class="aspect-[16/9] w-full object-cover object-top" loading="lazy" width="2528" height="1507" />
           </div>
-          <figcaption class="mt-4 text-sm text-subtext0 text-center">{shot.caption}</figcaption>
-        </figure>
+          <div class="mt-8 grid gap-4 md:grid-cols-12 md:items-start">
+            <h3 class="text-3xl font-semibold tracking-[-0.04em] md:col-span-5">{view.title}</h3>
+            <p class="max-w-2xl leading-relaxed text-subtext0 md:col-span-6 md:col-start-7">{view.body}</p>
+          </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
+
+<script is:inline>
+  document.querySelectorAll('[data-view-showcase]').forEach((showcase) => {
+    const root = showcase.parentElement;
+    const tabs = [...root.querySelectorAll('[data-view-tab]')];
+    const panels = root.querySelectorAll('[data-view-panel]');
+    const activate = (tab) => {
+      tabs.forEach((item) => { const active = item === tab; item.dataset.active = String(active); item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1; });
+      panels.forEach((panel) => { panel.hidden = panel.dataset.viewPanel !== tab.dataset.viewTab; });
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activate(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        activate(tabs[next]); tabs[next].focus();
+      });
+    });
+  });
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hyprfm.soyebjim.me/sitemap-index.xml

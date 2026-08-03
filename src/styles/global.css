@@ -1,8 +1,4 @@
-/* Self-hosted fonts via Fontsource — no Google Fonts call-home. */
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
-@import '@fontsource/inter/700.css';
+@import '@fontsource-variable/manrope';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
@@ -11,268 +7,139 @@
 @tailwind utilities;
 
 @layer base {
-  /* ── Catppuccin Latte (light) ────────────────────────────────── */
   :root {
     color-scheme: light;
-    --color-base:      239 241 245;
-    --color-mantle:    230 233 239;
-    --color-crust:     220 224 232;
-    --color-surface0:  204 208 218;
-    --color-surface1:  188 192 204;
-    --color-surface2:  172 176 190;
-    --color-overlay0:  156 160 176;
-    --color-overlay1:  140 143 161;
-    --color-overlay2:  124 127 147;
-    --color-subtext0:  108 111 133;
-    --color-subtext1:  92 95 119;
-    --color-text:      76 79 105;
-    --color-lavender:  114 135 253;
-    --color-blue:      30 102 245;
-    --color-sapphire:  32 159 181;
-    --color-sky:       4 165 229;
-    --color-teal:      23 146 153;
-    --color-green:     64 160 43;
-    --color-yellow:    223 142 29;
-    --color-peach:     254 100 11;
-    --color-maroon:    230 69 83;
-    --color-red:       210 15 57;
-    --color-mauve:     136 57 239;
-    --color-pink:      234 118 203;
-    --color-flamingo:  221 120 120;
-    --color-rosewater: 220 138 120;
+    --color-base: 244 245 247;
+    --color-mantle: 236 238 241;
+    --color-crust: 226 229 234;
+    --color-surface0: 211 215 222;
+    --color-surface1: 183 189 199;
+    --color-surface2: 145 153 166;
+    --color-overlay0: 118 127 141;
+    --color-overlay1: 93 102 117;
+    --color-overlay2: 73 82 97;
+    --color-subtext0: 87 96 110;
+    --color-subtext1: 62 70 83;
+    --color-text: 18 23 31;
+    --color-blue: 48 105 180;
+    --color-mauve: 48 105 180;
+    --color-lavender: 85 132 195;
+    --color-green: 40 139 92;
+    --color-yellow: 182 119 31;
+    --color-red: 183 67 75;
   }
 
-  /* ── Catppuccin Mocha (dark) ─────────────────────────────────── */
   .dark {
     color-scheme: dark;
-    --color-base:      30 30 46;
-    --color-mantle:    24 24 37;
-    --color-crust:     17 17 27;
-    --color-surface0:  49 50 68;
-    --color-surface1:  69 71 90;
-    --color-surface2:  88 91 112;
-    --color-overlay0:  108 112 134;
-    --color-overlay1:  127 132 156;
-    --color-overlay2:  147 153 178;
-    --color-subtext0:  166 173 200;
-    --color-subtext1:  186 194 222;
-    --color-text:      205 214 244;
-    --color-lavender:  180 190 254;
-    --color-blue:      137 180 250;
-    --color-sapphire:  116 199 236;
-    --color-sky:       137 220 235;
-    --color-teal:      148 226 213;
-    --color-green:     166 227 161;
-    --color-yellow:    249 226 175;
-    --color-peach:     250 179 135;
-    --color-maroon:    235 160 172;
-    --color-red:       243 139 168;
-    --color-mauve:     203 166 247;
-    --color-pink:      245 194 231;
-    --color-flamingo:  242 205 205;
-    --color-rosewater: 245 224 220;
+    --color-base: 10 12 16;
+    --color-mantle: 14 17 22;
+    --color-crust: 7 9 12;
+    --color-surface0: 26 31 40;
+    --color-surface1: 42 49 62;
+    --color-surface2: 63 73 89;
+    --color-overlay0: 92 104 123;
+    --color-overlay1: 116 128 147;
+    --color-overlay2: 144 156 175;
+    --color-subtext0: 151 162 180;
+    --color-subtext1: 180 190 205;
+    --color-text: 239 242 247;
+    --color-blue: 143 183 235;
+    --color-mauve: 143 183 235;
+    --color-lavender: 177 205 241;
+    --color-green: 126 202 160;
+    --color-yellow: 226 184 112;
+    --color-red: 229 128 137;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   body {
     @apply bg-base text-text font-sans;
-    font-feature-settings: "cv11", "ss01", "ss03";
+    font-feature-settings: 'ss02', 'ss03';
+    background-image: radial-gradient(circle at 50% -10%, rgb(var(--color-blue) / 0.08), transparent 32rem);
   }
 
-  /* Keep code blocks tight and readable */
-  code, pre, kbd, samp {
-    @apply font-mono;
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
   }
 
-  /* Focus rings that match the theme */
+  code, pre, kbd, samp { @apply font-mono; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
   :focus-visible {
-    @apply outline-none ring-2 ring-mauve ring-offset-2 ring-offset-base;
+    @apply outline-none ring-2 ring-blue ring-offset-2 ring-offset-base;
   }
 
-  /* Selection uses the theme accent */
   ::selection {
-    background: rgb(var(--color-mauve));
-    color: rgb(var(--color-base));
-  }
-
-  /* Scrollbar styling (webkit only, harmless fallback elsewhere) */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: rgb(var(--color-crust));
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgb(var(--color-surface1));
-    border-radius: 10px;
-    border: 2px solid rgb(var(--color-crust));
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--color-surface2));
+    background: rgb(var(--color-blue));
+    color: rgb(var(--color-crust));
   }
 }
 
 @layer components {
-  /* Gradient text used for the wordmark */
-  .text-gradient {
-    background: linear-gradient(135deg, rgb(var(--color-mauve)) 0%, rgb(var(--color-blue)) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
+  .shell { @apply mx-auto w-full max-w-[90rem] px-5 sm:px-8 lg:px-12; }
+  .section { @apply py-24 md:py-36; }
+  .eyebrow { @apply font-mono text-[0.68rem] font-medium uppercase tracking-[0.2em] text-blue; }
 
-  /* Soft panel background used throughout */
-  .panel {
-    @apply bg-mantle/60 backdrop-blur-sm border border-surface0/60 rounded-2xl;
-  }
-
-  /* Subtle gradient border on hover */
-  .card {
-    @apply relative bg-mantle/80 border border-surface0 rounded-2xl p-6 transition-all duration-300;
-  }
-  .card:hover {
-    @apply border-surface2 -translate-y-0.5;
-    box-shadow: 0 12px 40px -20px rgb(var(--color-blue) / 0.25);
-  }
-
-  /* Primary CTA button */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2
-           px-5 py-3 rounded-xl font-medium text-base
-           bg-mauve text-base
-           transition-all duration-200
-           hover:bg-lavender hover:scale-[1.02]
-           active:scale-[0.98]
-           focus-visible:ring-offset-2;
-  }
-
-  /* Secondary (outline) button */
+  .btn-primary,
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2
-           px-5 py-3 rounded-xl font-medium text-base
-           bg-surface0/40 text-text border border-surface1
-           transition-all duration-200
-           hover:bg-surface0 hover:border-surface2
-           active:scale-[0.98];
+    @apply inline-flex min-h-12 items-center justify-center gap-2 px-5 text-sm font-semibold transition duration-200;
+  }
+  .btn-primary {
+    @apply bg-text text-base hover:-translate-y-0.5 hover:bg-blue active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply border border-surface1 bg-mantle/70 text-text hover:border-overlay0 hover:bg-surface0 active:translate-y-px;
   }
 
-  /* Code block wrapper */
-  .code-block {
-    @apply relative bg-crust border border-surface0 rounded-xl p-4 font-mono text-sm overflow-x-auto;
+  .window {
+    @apply overflow-hidden border border-surface1/80 bg-crust;
+    box-shadow: 0 2rem 6rem rgb(0 0 0 / 0.28), 0 0 0 1px rgb(var(--color-blue) / 0.04);
   }
 
-  /* Section padding helpers */
-  .section {
-    @apply py-24 md:py-32;
-  }
-  .container-narrow {
-    @apply mx-auto max-w-6xl px-6;
-  }
+  .window-bar { @apply flex h-11 items-center border-b border-surface0 bg-mantle px-4; }
+  .key { @apply inline-flex min-w-7 items-center justify-center border border-surface1 bg-surface0 px-2 py-1 font-mono text-xs text-subtext1; }
 }
 
 @layer utilities {
-  /* Scroll reveal: hidden initially, animates in when .is-visible is added */
+  .hairline-grid {
+    background-image: linear-gradient(rgb(var(--color-surface0) / 0.45) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-surface0) / 0.45) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+  }
+
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(18px);
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .reveal-delay-1 { transition-delay: 80ms; }
-  .reveal-delay-2 { transition-delay: 160ms; }
-  .reveal-delay-3 { transition-delay: 240ms; }
-  .reveal-delay-4 { transition-delay: 320ms; }
-  .reveal-delay-5 { transition-delay: 400ms; }
-  .reveal-delay-6 { transition-delay: 480ms; }
-
-  /* Background dot grid overlay — subtle texture for the hero */
-  .dot-grid {
-    background-image: radial-gradient(rgb(var(--color-surface1)) 1px, transparent 1px);
-    background-size: 24px 24px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-
-  /* Gradient orbs for the hero background */
-  .orb {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(64px);
-    opacity: 0.35;
-    pointer-events: none;
-  }
-  .dark .orb {
-    opacity: 0.35;
-  }
-  :root:not(.dark) .orb {
-    opacity: 0.2;
-  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 70ms; }
+  .reveal-delay-2 { transition-delay: 140ms; }
+  .reveal-delay-3 { transition-delay: 210ms; }
+  .reveal-delay-4 { transition-delay: 280ms; }
 }
 
-/* ── Theme transition ──────────────────────────────────────────
-   Only active while .theme-transitioning is on <html> so the
-   initial page load doesn't flash a transition. */
 .theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *::before,
-.theme-transitioning *::after {
-  transition: background-color 0.4s ease,
-              color 0.4s ease,
-              border-color 0.4s ease,
-              box-shadow 0.4s ease,
-              opacity 0.4s ease !important;
+.theme-transitioning * {
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease !important;
 }
 
-/* ── Theme toggle icon spin ───────────────────────────────────── */
-#theme-toggle svg {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-#theme-toggle:active svg {
-  transform: rotate(45deg) scale(0.85);
-}
+[data-panel].tab-enter { animation: tab-enter 300ms cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes tab-enter { from { opacity: 0; transform: translateY(6px); } }
 
-/* ── Tab panel fade-slide ─────────────────────────────────────── */
-[data-panel] {
-  animation: none;
-}
-[data-panel].tab-enter {
-  animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes tabFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .animate-float-slow {
-    animation: none !important;
-  }
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
 }

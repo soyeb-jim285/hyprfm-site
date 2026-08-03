@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = 'HyprFM — Lightweight Qt6/QML file manager for Hyprland',
-  description = 'A fast, keyboard-driven file manager for Hyprland and other Wayland compositors. Grid, detailed and Miller column views, live previews, tabs, fd-powered search, TOML themes.',
+  title = 'HyprFM — A keyboard-friendly file manager for Wayland',
+  description = 'A fast Qt 6 file manager for Hyprland and Wayland desktops, with three views, split panes, rich previews, remote locations, and reversible file operations.',
 } = Astro.props;
 ---
 
@@ -42,18 +42,21 @@ const {
     <meta name="generator" content={Astro.generator} />
 
     <link rel="icon" type="image/svg+xml" href="/hyprfm.svg" />
-    <link rel="canonical" href={Astro.site?.toString()} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
 
     {/* Open Graph / Twitter cards */}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.site?.toString()} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/hyprfm.svg" />
+    <meta property="og:site_name" content="HyprFM" />
+    <meta property="og:image" content={new URL('/screenshots/grid-view.png', Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/hyprfm.svg" />
+    <meta name="twitter:image" content={new URL('/screenshots/grid-view.png', Astro.site)} />
+    <meta name="theme-color" content="#0a0c10" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'HyprFM', applicationCategory: 'UtilitiesApplication', operatingSystem: 'Linux (Wayland)', license: 'https://opensource.org/license/mit', url: Astro.site?.toString(), downloadUrl: 'https://github.com/soyeb-jim285/hyprfm/releases', description })}></script>
   </head>
   <body class="min-h-screen antialiased">
     <slot />

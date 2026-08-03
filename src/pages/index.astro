@@ -3,14 +3,19 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Features from '../components/Features.astro';
 import Screenshots from '../components/Screenshots.astro';
+import Shortcuts from '../components/Shortcuts.astro';
 import Install from '../components/Install.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <Base>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-text focus:px-4 focus:py-3 focus:text-base">Skip to content</a>
   <Hero />
-  <Features />
-  <Screenshots />
-  <Install />
+  <main id="main-content">
+    <Features />
+    <Screenshots />
+    <Shortcuts />
+    <Install />
+  </main>
   <Footer />
 </Base>

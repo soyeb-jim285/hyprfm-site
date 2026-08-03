@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page not found — HyprFM" description="The requested HyprFM page could not be found.">
+  <main class="relative grid min-h-screen place-items-center overflow-hidden px-5">
+    <div class="pointer-events-none absolute inset-0 hairline-grid" aria-hidden="true"></div>
+    <div class="relative max-w-3xl text-center">
+      <p class="eyebrow mb-6">Error · path not found</p>
+      <h1 class="text-[clamp(6rem,25vw,16rem)] font-semibold leading-[0.75] tracking-[-0.09em] text-blue">404</h1>
+      <p class="mx-auto mt-10 max-w-md text-lg leading-relaxed text-subtext1">This location does not exist, or it moved somewhere else.</p>
+      <a href="/" class="btn-primary mt-8">Return home</a>
+    </div>
+  </main>
+</Base>
