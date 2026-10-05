@@ -1,0 +1,272 @@
+[
+ {
+  "group": "Navigate",
+  "action": "open",
+  "label": "Open",
+  "keys": "Return"
+ },
+ {
+  "group": "Navigate",
+  "action": "back",
+  "label": "Back",
+  "keys": "Alt+Left"
+ },
+ {
+  "group": "Navigate",
+  "action": "forward",
+  "label": "Forward",
+  "keys": "Alt+Right"
+ },
+ {
+  "group": "Navigate",
+  "action": "parent",
+  "label": "Go to Parent",
+  "keys": "Alt+Up"
+ },
+ {
+  "group": "Navigate",
+  "action": "home",
+  "label": "Home",
+  "keys": "Alt+Home"
+ },
+ {
+  "group": "Navigate",
+  "action": "refresh",
+  "label": "Refresh",
+  "keys": "F5"
+ },
+ {
+  "group": "Navigate",
+  "action": "path_bar",
+  "label": "Focus Path Bar",
+  "keys": "Ctrl+L"
+ },
+ {
+  "group": "Navigate",
+  "action": "search",
+  "label": "Search",
+  "keys": "Ctrl+F"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "new_tab",
+  "label": "New Tab",
+  "keys": "Ctrl+T"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "close_tab",
+  "label": "Close Tab",
+  "keys": "Ctrl+W"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "next_tab",
+  "label": "Next Tab",
+  "keys": "Ctrl+Tab"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "previous_tab",
+  "label": "Previous Tab",
+  "keys": "Ctrl+Shift+Tab"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "reopen_tab",
+  "label": "Reopen Closed Tab",
+  "keys": "Ctrl+Shift+T"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "open_in_new_tab",
+  "label": "Open in New Tab",
+  "keys": "Ctrl+Return"
+ },
+ {
+  "group": "Tabs & windows",
+  "action": "new_window",
+  "label": "New Window",
+  "keys": "Ctrl+Alt+N"
+ },
+ {
+  "group": "Files",
+  "action": "copy",
+  "label": "Copy",
+  "keys": "Ctrl+C"
+ },
+ {
+  "group": "Files",
+  "action": "cut",
+  "label": "Cut",
+  "keys": "Ctrl+X"
+ },
+ {
+  "group": "Files",
+  "action": "paste",
+  "label": "Paste",
+  "keys": "Ctrl+V"
+ },
+ {
+  "group": "Files",
+  "action": "rename",
+  "label": "Rename",
+  "keys": "F2"
+ },
+ {
+  "group": "Files",
+  "action": "new_folder",
+  "label": "New Folder",
+  "keys": "Ctrl+Shift+N"
+ },
+ {
+  "group": "Files",
+  "action": "new_file",
+  "label": "New File",
+  "keys": "Ctrl+N"
+ },
+ {
+  "group": "Files",
+  "action": "trash",
+  "label": "Move to Trash",
+  "keys": "Delete"
+ },
+ {
+  "group": "Files",
+  "action": "permanent_delete",
+  "label": "Permanent Delete",
+  "keys": "Shift+Delete"
+ },
+ {
+  "group": "Files",
+  "action": "select_all",
+  "label": "Select All",
+  "keys": "Ctrl+A"
+ },
+ {
+  "group": "Files",
+  "action": "undo",
+  "label": "Undo",
+  "keys": "Ctrl+Z"
+ },
+ {
+  "group": "Files",
+  "action": "redo",
+  "label": "Redo",
+  "keys": "Ctrl+Shift+Z"
+ },
+ {
+  "group": "View",
+  "action": "quick_preview",
+  "label": "Quick Preview",
+  "keys": "Space"
+ },
+ {
+  "group": "View",
+  "action": "grid_view",
+  "label": "Grid View",
+  "keys": "Ctrl+1"
+ },
+ {
+  "group": "View",
+  "action": "miller_view",
+  "label": "Miller View",
+  "keys": "Ctrl+2"
+ },
+ {
+  "group": "View",
+  "action": "detailed_view",
+  "label": "Detailed View",
+  "keys": "Ctrl+3"
+ },
+ {
+  "group": "View",
+  "action": "toggle_hidden",
+  "label": "Toggle Hidden Files",
+  "keys": "Ctrl+H"
+ },
+ {
+  "group": "View",
+  "action": "toggle_sidebar",
+  "label": "Toggle Sidebar",
+  "keys": "F9"
+ },
+ {
+  "group": "View",
+  "action": "toggle_transparency",
+  "label": "Toggle Transparency",
+  "keys": "Ctrl+Shift+B"
+ },
+ {
+  "group": "Split view",
+  "action": "split_view",
+  "label": "Toggle Split View",
+  "keys": "F3"
+ },
+ {
+  "group": "Split view",
+  "action": "open_in_split",
+  "label": "Open in Split View",
+  "keys": "Ctrl+Shift+Return"
+ },
+ {
+  "group": "Split view",
+  "action": "focus_next_pane",
+  "label": "Focus Next Pane",
+  "keys": "F6"
+ },
+ {
+  "group": "Split view",
+  "action": "focus_previous_pane",
+  "label": "Focus Previous Pane",
+  "keys": "Shift+F6"
+ },
+ {
+  "group": "Split view",
+  "action": "focus_left_pane",
+  "label": "Focus Left Pane",
+  "keys": "Ctrl+Alt+Left"
+ },
+ {
+  "group": "Split view",
+  "action": "focus_right_pane",
+  "label": "Focus Right Pane",
+  "keys": "Ctrl+Alt+Right"
+ },
+ {
+  "group": "Tools",
+  "action": "context_menu",
+  "label": "Show Context Menu",
+  "keys": "Shift+F10"
+ },
+ {
+  "group": "Tools",
+  "action": "open_terminal",
+  "label": "Open in Terminal",
+  "keys": "Ctrl+Alt+T"
+ },
+ {
+  "group": "Tools",
+  "action": "properties",
+  "label": "Properties",
+  "keys": "Alt+Return"
+ },
+ {
+  "group": "Tools",
+  "action": "settings",
+  "label": "Open Settings",
+  "keys": "Ctrl+,"
+ },
+ {
+  "group": "Tools",
+  "action": "edit_config",
+  "label": "Edit config.toml",
+  "keys": "Ctrl+Shift+,"
+ },
+ {
+  "group": "Tools",
+  "action": "keyboard_shortcuts",
+  "label": "Open Keyboard Shortcuts",
+  "keys": "Ctrl+?"
+ }
+]

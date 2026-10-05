@@ -1,0 +1,47 @@
+---
+interface Props { version: string }
+const { version } = Astro.props;
+---
+
+<header class="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="#top" aria-label="HyprFM, back to top">
+      <img src="/hyprfm.svg" alt="" width="28" height="28" />
+      <span>HyprFM</span>
+    </a>
+    <a class="ver" href="https://github.com/soyeb-jim285/hyprfm/releases/latest">{version}</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#previews">Previews</a>
+      <a href="#keyboard">Keyboard</a>
+      <a href="#themes">Themes</a>
+      <a href="#speed">Speed</a>
+      <a href="#install">Install</a>
+    </nav>
+    <button class="mode" type="button" id="mode-toggle" aria-label="Switch between light and dark">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    </button>
+    <a class="gh" href="https://github.com/soyeb-jim285/hyprfm">GitHub</a>
+  </div>
+</header>
+
+<script is:inline>
+  document.getElementById('mode-toggle').addEventListener('click', function () {
+    var r = document.documentElement;
+    var light = r.dataset.mode ? r.dataset.mode === 'light' : matchMedia('(prefers-color-scheme: light)').matches;
+    window.applyHyprTheme(light ? 'catppuccin-mocha' : 'catppuccin-latte', true);
+  });
+</script>
+
+<style>
+  .nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--page) 78%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+  .nav-in { display: flex; align-items: center; gap: 18px; min-height: 64px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -.01em; text-decoration: none; }
+  .ver { font: 600 12px var(--mono); color: var(--accent); border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px; text-decoration: none; }
+  .links { display: flex; gap: 22px; margin-left: auto; }
+  .links a { color: var(--subtext); text-decoration: none; font-size: 15px; }
+  .links a:hover { color: var(--text); }
+  .mode { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: none; cursor: pointer; color: var(--subtext); }
+  .mode:hover { color: var(--text); }
+  .gh { font-weight: 600; font-size: 14px; text-decoration: none; padding: 8px 14px; border-radius: 10px; background: var(--text); color: var(--crust); }
+  @media (max-width: 760px) { .links { display: none; } .mode { margin-left: auto; } }
+</style>

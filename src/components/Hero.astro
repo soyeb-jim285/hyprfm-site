@@ -1,83 +1,155 @@
 ---
-import { getLatestVersion } from '../lib/version';
-const version = await getLatestVersion();
+interface Props { version: string }
+const { version } = Astro.props;
+
+// Real frames of HyprFM, recorded in CI (hyprfm repo: brag/capture/site.sh).
+const miller = ['aurora-from-orbit.jpg', 'cosmic-cliffs-8k.jpg', 'great-wave-but-dark.jpg', 'monet-with-blur-on.jpg',
+  'orbital-sunrise-final2.jpg', 'starry-night-tiled.jpg', 'tokaido-nord-theme.jpg'].map((name, i) => ({ src: `/media/s/hero-w${i}.webp`, name }));
+const peek = ['code-reviewer.jpg', 'my-first-rice-1946.jpg', 'my-setup-from-orbit.jpg', 'pair-programmer.jpg',
+  'senior-engineer.jpg', 'vacuum-tube-refactor.jpg'].map((name, i) => ({ src: `/media/s/peek-${i}.webp`, name }));
+const methods = [
+  { id: 'arch', label: 'Arch', cmd: 'yay -S hyprfm-git' },
+  { id: 'flatpak', label: 'Flatpak', cmd: 'flatpak install --user hyprfm io.github.soyeb_jim285.HyprFM' },
+  { id: 'nix', label: 'Nix', cmd: 'nix run github:soyeb-jim285/hyprfm' },
+  { id: 'appimage', label: 'AppImage', cmd: `./HyprFM-${version}-x86_64.AppImage` },
+];
 ---
 
-<header class="relative overflow-hidden border-b border-surface0">
-  <div class="pointer-events-none absolute inset-0 hairline-grid" aria-hidden="true"></div>
-  <nav class="shell relative flex h-20 items-center justify-between" aria-label="Primary navigation">
-    <a href="/" class="group flex items-center gap-3" aria-label="HyprFM home">
-      <img src="/hyprfm.svg" alt="" width="34" height="34" class="transition group-hover:-rotate-3 group-hover:scale-105" />
-      <span class="text-lg font-bold tracking-[-0.04em]">HyprFM</span>
-    </a>
-
-    <div class="hidden items-center gap-8 md:flex">
-      <a href="#capabilities" class="text-sm text-subtext0 transition hover:text-text">Capabilities</a>
-      <a href="#showcase" class="text-sm text-subtext0 transition hover:text-text">Views</a>
-      <a href="#shortcuts" class="text-sm text-subtext0 transition hover:text-text">Shortcuts</a>
-      <a href="#install" class="text-sm text-subtext0 transition hover:text-text">Install</a>
-    </div>
-
-    <div class="flex items-center gap-2">
-      <a href="#install" class="btn-secondary !min-h-10 !px-3 md:hidden">Install</a>
-      <a href="https://github.com/soyeb-jim285/hyprfm" rel="noopener" class="hidden btn-secondary !min-h-10 !px-4 sm:inline-flex">GitHub</a>
-      <button id="theme-toggle" type="button" class="btn-secondary !min-h-10 !w-10 !px-0" aria-label="Switch color theme" aria-pressed="false">
-        <svg class="dark:hidden" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
-        <svg class="hidden dark:block" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
-      </button>
-    </div>
-  </nav>
-
-  <div class="shell relative pb-20 pt-16 sm:pt-24 lg:pb-28 lg:pt-32">
-    <div class="grid gap-12 lg:grid-cols-[1fr_18rem] lg:items-end">
-      <div>
-        <div class="mb-8 flex items-center gap-3 reveal">
-          <span class="h-px w-8 bg-blue"></span>
-          <span class="eyebrow">Wayland file manager · {version}</span>
-        </div>
-        <h1 class="max-w-5xl text-[clamp(3.5rem,10vw,9rem)] font-semibold leading-[0.83] tracking-[-0.075em] reveal reveal-delay-1">
-          Your files.<br /><span class="text-blue">Under command.</span>
-        </h1>
-      </div>
-      <div class="pb-2 reveal reveal-delay-2">
-        <p class="mb-7 text-lg leading-relaxed text-subtext1">A fast, keyboard-friendly file manager built for Hyprland and Wayland desktops.</p>
-        <div class="flex flex-col gap-2 sm:flex-row lg:flex-col">
-          <a href="#install" class="btn-primary">Install HyprFM <span aria-hidden="true">↓</span></a>
-          <a href="#showcase" class="btn-secondary">See the interface</a>
+<section class="hero" id="top">
+  <div class="shell">
+    <div class="statement">
+      <h1 class="reveal">The file manager your <em>rice</em> deserves.</h1>
+      <div class="side reveal">
+        <p class="lede">Fast, keyboard-first and Wayland-native. Miller columns, a preview for every file, and ten themes that reload the moment you save.</p>
+        <div class="install">
+          <div class="distro" role="group" aria-label="Install method">
+            {methods.map((m, i) => <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-cmd={m.cmd}>{m.label}</button>)}
+          </div>
+          <div class="cmd"><code id="hero-cmd">{methods[0].cmd}</code><button type="button" id="hero-copy">Copy</button></div>
+          <a class="more" href="#install">Flatpak setup, AppImage download and building from source ↓</a>
         </div>
       </div>
     </div>
 
-    <div class="mt-16 reveal reveal-delay-3 lg:mt-24">
-      <div class="window relative">
-        <div class="window-bar justify-between">
-          <div class="flex items-center gap-2"><span class="size-2 bg-red"></span><span class="size-2 bg-yellow"></span><span class="size-2 bg-green"></span></div>
-          <span class="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-overlay0">~/hyprfm</span>
-          <span class="font-mono text-[0.65rem] text-overlay0">01 / 03</span>
-        </div>
-        <img src="/screenshots/grid-view.png" alt="HyprFM displaying project files in Grid view" class="aspect-[16/9] w-full object-cover object-top" width="2528" height="1507" fetchpriority="high" />
-        <div class="absolute bottom-4 right-4 hidden border border-surface1 bg-crust/90 px-3 py-2 font-mono text-[0.65rem] text-subtext0 backdrop-blur md:block">CTRL + 1 · GRID VIEW</div>
+    <div class="stage reveal" id="try">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="frame window" id="hero-win" role="img" aria-label="HyprFM, recorded. Use the arrow keys and Space to step through it.">
+        {miller.map((f, i) => <img src={f.src} alt="" data-set="miller" data-name={f.name} class={i === 0 ? 'on' : ''} width="2000" height="1250" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />)}
+        {peek.map((f) => <img src={f.src} alt="" data-set="peek" data-name={f.name} width="2000" height="1250" loading="lazy" decoding="async" />)}
       </div>
+      <div class="controls">
+        <p class="state"><span class="eyebrow" id="hero-mode">Miller columns</span> <code id="hero-file">{miller[0].name}</code></p>
+        <div class="pad">
+          <span class="hint">Your arrow keys and Space work here, or tap:</span>
+          <button class="key" type="button" data-k="ArrowUp" aria-label="Up">↑</button>
+          <button class="key" type="button" data-k="ArrowDown" aria-label="Down">↓</button>
+          <button class="key" type="button" data-k="ArrowLeft" aria-label="Left">←</button>
+          <button class="key" type="button" data-k="ArrowRight" aria-label="Right">→</button>
+          <button class="key wide" type="button" data-k=" ">Space</button>
+          <button class="key" type="button" data-k="Escape">Esc</button>
+        </div>
+      </div>
+      <p class="note">Every frame is a recording of the real app on a headless Wayland session. Nothing here is a mock-up.</p>
     </div>
 
-    <dl class="mt-8 grid grid-cols-2 border-y border-surface0 sm:grid-cols-4 reveal">
-      <div class="border-r border-surface0 px-4 py-5 sm:px-6"><dt class="eyebrow mb-2">Views</dt><dd class="text-xl font-semibold">03</dd></div>
-      <div class="px-4 py-5 sm:border-r sm:border-surface0 sm:px-6"><dt class="eyebrow mb-2">Undo stack</dt><dd class="text-xl font-semibold">50 ops</dd></div>
-      <div class="border-r border-t border-surface0 px-4 py-5 sm:border-t-0 sm:px-6"><dt class="eyebrow mb-2">License</dt><dd class="text-xl font-semibold">MIT</dd></div>
-      <div class="border-t border-surface0 px-4 py-5 sm:border-t-0 sm:px-6"><dt class="eyebrow mb-2">Toolkit</dt><dd class="text-xl font-semibold">Qt 6</dd></div>
+    <dl class="facts reveal">
+      <div><dt>Launch to window</dt><dd>180 ms</dd></div>
+      <div><dt>Bundled themes</dt><dd>10</dd></div>
+      <div><dt>Rebindable shortcuts</dt><dd>45</dd></div>
+      <div><dt>Licence</dt><dd>MIT</dd></div>
     </dl>
   </div>
-</header>
+</section>
 
 <script is:inline>
-  const themeButton = document.getElementById('theme-toggle');
-  const updateThemeState = () => themeButton?.setAttribute('aria-pressed', String(document.documentElement.classList.contains('dark')));
-  updateThemeState();
-  themeButton?.addEventListener('click', () => {
-    document.documentElement.classList.add('theme-transitioning');
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updateThemeState();
-    window.setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 320);
-  });
+  (function () {
+    var win = document.getElementById('hero-win');
+    var sets = { miller: [].slice.call(win.querySelectorAll('[data-set="miller"]')), peek: [].slice.call(win.querySelectorAll('[data-set="peek"]')) };
+    var mode = 'miller', idx = { miller: 0, peek: 0 }, timer = null;
+    function show() {
+      var cur = sets[mode][idx[mode]];
+      win.querySelectorAll('img').forEach(function (im) { im.classList.toggle('on', im === cur); });
+      document.getElementById('hero-mode').textContent = mode === 'miller' ? 'Miller columns' : 'Quick preview';
+      document.getElementById('hero-file').textContent = cur.dataset.name;
+    }
+    function press(k) {
+      var b = document.querySelector('.pad .key[data-k="' + k + '"]');
+      if (b) { b.classList.add('down'); setTimeout(function () { b.classList.remove('down'); }, 130); }
+      var list = sets[mode], i = idx[mode];
+      if (k === ' ') mode = mode === 'miller' ? 'peek' : 'miller';
+      else if (k === 'Escape') mode = 'miller';
+      else if (k === 'ArrowDown' || (mode === 'peek' && k === 'ArrowRight')) idx[mode] = mode === 'peek' ? (i + 1) % list.length : Math.min(list.length - 1, i + 1);
+      else if (k === 'ArrowUp' || (mode === 'peek' && k === 'ArrowLeft')) idx[mode] = mode === 'peek' ? (i + list.length - 1) % list.length : Math.max(0, i - 1);
+      show();
+    }
+    var KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Escape'];
+    document.addEventListener('keydown', function (e) {
+      if (KEYS.indexOf(e.key) < 0 || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.target.closest && e.target.closest('input, textarea, select, button, a')) return;
+      var r = document.getElementById('try').getBoundingClientRect();
+      if (r.bottom < 80 || r.top > innerHeight * 0.6) return;
+      e.preventDefault(); stop(); press(e.key);
+    });
+    document.querySelectorAll('.pad .key').forEach(function (b) { b.addEventListener('click', function () { stop(); press(b.dataset.k); }); });
+    // An idle walk-through until the visitor presses something.
+    var script = ['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', ' ', 'ArrowRight', 'ArrowRight', 'ArrowRight', ' ', 'ArrowUp', 'ArrowUp', 'ArrowUp', 'ArrowUp'], step = 0;
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(function () { press(script[step++ % script.length]); }, 1700);
+
+    document.querySelectorAll('.distro button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('.distro button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        document.getElementById('hero-cmd').textContent = b.dataset.cmd;
+      });
+    });
+    document.getElementById('hero-copy').addEventListener('click', function (e) {
+      var el = document.getElementById('hero-cmd');
+      navigator.clipboard.writeText(el.textContent).then(function () {
+        e.target.textContent = 'Copied'; setTimeout(function () { e.target.textContent = 'Copy'; }, 1400);
+      }).catch(function () { var s = getSelection(), r = document.createRange(); r.selectNodeContents(el); s.removeAllRanges(); s.addRange(r); });
+    });
+  })();
 </script>
+
+<style>
+  .hero { padding-block: clamp(40px, 6vw, 72px) clamp(64px, 8vw, 104px); }
+  .statement { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px 56px; align-items: end; margin-bottom: 40px; }
+  h1 { font: 400 clamp(2.8rem, 7vw, 5.8rem)/.96 var(--display); letter-spacing: -.012em; }
+  h1 em { color: var(--error); }
+  .side { display: grid; gap: 22px; }
+  .lede { color: var(--subtext); }
+  .install { display: grid; gap: 10px; }
+  .distro { display: flex; gap: 6px; flex-wrap: wrap; }
+  .distro button { font: 600 12px var(--mono); letter-spacing: .04em; color: var(--subtext); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; cursor: pointer; }
+  .distro button[aria-pressed='true'] { color: var(--crust); background: var(--text); border-color: var(--text); }
+  .cmd { display: flex; align-items: center; gap: 12px; background: var(--mantle); border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 10px 16px; min-width: 0; }
+  .cmd code { font-size: 15px; white-space: nowrap; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+  .cmd code::before { content: '$ '; color: var(--success); }
+  .cmd button { font-weight: 700; font-size: 13px; color: var(--crust); background: var(--accent); border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; flex: none; }
+  .more { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .more:hover { color: var(--text); }
+
+  .stage { position: relative; }
+  .glow { position: absolute; inset: 8% 6% -8%; z-index: -1; filter: blur(48px); background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 30%, transparent), transparent); }
+  .window { aspect-ratio: 16 / 10; }
+  .window img { position: absolute; inset: 0; opacity: 0; transition: opacity .12s linear; }
+  .window img.on { opacity: 1; }
+  .controls { display: flex; justify-content: space-between; align-items: center; gap: 16px 24px; flex-wrap: wrap; padding-top: 20px; }
+  .state { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .state code { font-size: 14px; color: var(--text); }
+  .pad { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 17px; }
+  .pad .key { cursor: pointer; transition: transform .06s, box-shadow .06s; }
+  .pad .key.down, .pad .key:active { transform: translateY(3px); box-shadow: 0 0 0 var(--crust), 0 3px 8px var(--shadow); }
+  .hint { color: var(--muted); font-size: 14px; margin-right: 4px; }
+  .note { color: var(--muted); font-size: 14px; margin-top: 12px; }
+
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 56px 0 0; border-top: 1px solid var(--line); }
+  .facts div { padding: 18px 18px 0 0; }
+  .facts dt { font: 600 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .facts dd { margin: 6px 0 0; font: 400 clamp(1.8rem, 3vw, 2.6rem)/1 var(--display); font-variant-numeric: tabular-nums; }
+  @media (max-width: 860px) {
+    .statement { grid-template-columns: minmax(0, 1fr); }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .window img { transition: none; } }
+</style>
