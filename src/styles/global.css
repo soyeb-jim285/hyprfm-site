@@ -77,6 +77,7 @@ button { font: inherit; color: inherit; }
   .reveal, .js .reveal:not(.is-visible) { opacity: 1; transform: none; transition: none; }
   :root.theme-shift, :root.theme-shift * { transition: none !important; }
 }
+[hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: 16px; top: -60px; background: var(--text); color: var(--crust); padding: 10px 14px; border-radius: 8px; z-index: 100; text-decoration: none; }
 .skip:focus { top: 16px; }
