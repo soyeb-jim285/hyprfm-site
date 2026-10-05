@@ -1,21 +1,38 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
-import Features from '../components/Features.astro';
-import Screenshots from '../components/Screenshots.astro';
+import Tour from '../components/Tour.astro';
+import Previews from '../components/Previews.astro';
+import QuickPreview from '../components/QuickPreview.astro';
+import Views from '../components/Views.astro';
+import NoMouse from '../components/NoMouse.astro';
+import Themes from '../components/Themes.astro';
+import Customize from '../components/Customize.astro';
+import Speed from '../components/Speed.astro';
 import Shortcuts from '../components/Shortcuts.astro';
 import Install from '../components/Install.astro';
 import Footer from '../components/Footer.astro';
+import { getLatestVersion } from '../lib/version';
+
+const version = await getLatestVersion();
 ---
 
 <Base>
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-text focus:px-4 focus:py-3 focus:text-base">Skip to content</a>
-  <Hero />
-  <main id="main-content">
-    <Features />
-    <Screenshots />
+  <a href="#main" class="skip">Skip to content</a>
+  <Nav version={version} />
+  <main id="main">
+    <Hero version={version} />
+    <Tour />
+    <Previews />
+    <QuickPreview />
+    <Views />
+    <NoMouse />
+    <Themes />
+    <Customize />
+    <Speed />
     <Shortcuts />
-    <Install />
+    <Install version={version} />
   </main>
   <Footer />
 </Base>

@@ -1,0 +1,109 @@
+---
+interface Props { version: string }
+const { version } = Astro.props;
+const methods = [
+  { id: 'aur', label: 'Arch (AUR)', note: 'Builds the current development version.', code: 'yay -S hyprfm-git' },
+  { id: 'flatpak', label: 'Flatpak', note: 'Recommended outside Arch. Signed repository; the KDE runtime comes from Flathub at user scope.', code: [
+    'flatpak remote-add --user --if-not-exists flathub \\',
+    '  https://dl.flathub.org/repo/flathub.flatpakrepo',
+    'flatpak remote-add --user --if-not-exists hyprfm \\',
+    '  https://flatpak.hyprfm.soyebjim.me/hyprfm.flatpakrepo',
+    'flatpak install --user hyprfm io.github.soyeb_jim285.HyprFM'].join('\n') },
+  { id: 'appimage', label: 'AppImage', note: `Self-contained x86_64 build of ${version}. No system Qt needed.`, code: [
+    `curl -LO https://github.com/soyeb-jim285/hyprfm/releases/latest/download/HyprFM-${version}-x86_64.AppImage`,
+    'chmod +x HyprFM-*.AppImage',
+    './HyprFM-*.AppImage'].join('\n') },
+  { id: 'nix', label: 'Nix', note: 'Run straight from the flake, or add it as an input and use hyprfm.packages.<system>.default. On NixOS, enable services.gvfs for network locations.', code: [
+    'nix run github:soyeb-jim285/hyprfm',
+    '',
+    '# flake.nix',
+    'inputs.hyprfm.url = "github:soyeb-jim285/hyprfm";'].join('\n') },
+  { id: 'source', label: 'Source', note: 'Needs cmake, ninja, qt6-base, qt6-declarative and qt6-svg. Keep --recursive: the UI library is a submodule.', code: [
+    'git clone --recursive https://github.com/soyeb-jim285/hyprfm.git',
+    'cd hyprfm',
+    'cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF',
+    'cmake --build build --parallel',
+    './build/src/hyprfm'].join('\n') },
+];
+const extras = [
+  ['bat', 'syntax-highlighted previews'], ['md4c', 'rendered Markdown'], ['poppler', 'PDF pages'], ['ffmpeg', 'video posters and media info'],
+  ['exiftool', 'photo metadata'], ['fd', 'faster search'], ['gvfs', 'SFTP, SMB and MTP'], ['udisks2', 'mounting drives'],
+];
+---
+
+<section class="section install" id="install">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Get HyprFM · {version}</span>
+        <h2 class="h-section">Ready when your <em>desktop</em> is.</h2>
+      </div>
+      <p class="lede">HyprFM needs a Wayland session. It is built for Hyprland and runs on GNOME and KDE Plasma too. <a href="https://github.com/soyeb-jim285/hyprfm/releases/latest">Release notes ↗</a></p>
+    </div>
+
+    <div class="box reveal">
+      <div class="tabs" role="tablist" aria-label="Install method">
+        {methods.map((m, i) => <button type="button" role="tab" id={`in-t-${m.id}`} aria-controls={`in-p-${m.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{m.label}</button>)}
+      </div>
+      {methods.map((m, i) => (
+        <div class="panel" role="tabpanel" id={`in-p-${m.id}`} aria-labelledby={`in-t-${m.id}`} hidden={i !== 0}>
+          <div class="ptop"><p>{m.note}</p><button type="button" class="copy" data-copy={m.code}>Copy</button></div>
+          <pre><code>{m.code}</code></pre>
+        </div>
+      ))}
+    </div>
+
+    <div class="extras reveal">
+      <h3>Optional, and picked up automatically when installed</h3>
+      <ul>{extras.map(([pkg, what]) => <li><code>{pkg}</code><span>{what}</span></li>)}</ul>
+      <p>The Flatpak, AppImage and Nix builds bundle these already.</p>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var tabs = [].slice.call(document.querySelectorAll('.install .tabs button'));
+    function sel(t, focus) {
+      tabs.forEach(function (x) {
+        var on = x === t; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1;
+        document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) t.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { sel(t); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+        if (n !== null) { e.preventDefault(); sel(tabs[(n + tabs.length) % tabs.length], true); }
+      });
+    });
+    document.querySelectorAll('.install .copy').forEach(function (b) {
+      b.addEventListener('click', function () {
+        navigator.clipboard.writeText(b.dataset.copy).then(function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1400); })
+          .catch(function () { var c = b.closest('.panel').querySelector('code'); var s = getSelection(), r = document.createRange(); r.selectNodeContents(c); s.removeAllRanges(); s.addRange(r); });
+      });
+    });
+  })();
+</script>
+
+<style>
+  .lede a { color: var(--accent); }
+  .box { border: 1px solid var(--line); border-radius: 16px; background: var(--mantle); overflow: hidden; }
+  .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+  .tabs button { padding: 14px 20px; background: none; border: 0; border-right: 1px solid var(--line); cursor: pointer; color: var(--subtext); font-weight: 600; font-size: 15px; }
+  .tabs button[aria-selected='true'] { color: var(--crust); background: var(--text); }
+  .panel { padding: 20px 22px 22px; display: grid; gap: 14px; }
+  .ptop { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .ptop p { color: var(--subtext); font-size: 15px; }
+  .copy { flex: none; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 8px; border: 0; background: var(--accent); color: var(--crust); cursor: pointer; }
+  pre { margin: 0; padding: 16px 18px; border-radius: 10px; background: var(--crust); overflow-x: auto; font-size: 14px; line-height: 1.7; }
+  .extras { margin-top: 36px; display: grid; gap: 14px; }
+  .extras h3 { font: 400 1.6rem/1.1 var(--display); }
+  .extras ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .extras li { display: grid; gap: 2px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); }
+  .extras li code { color: var(--accent); font-size: 14px; }
+  .extras li span { color: var(--subtext); font-size: 14px; }
+  .extras > p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 860px) { .extras ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ptop { flex-direction: column; align-items: flex-start; } }
+</style>

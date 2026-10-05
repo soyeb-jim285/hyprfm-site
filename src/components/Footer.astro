@@ -1,0 +1,35 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="foot">
+  <div class="shell fgrid">
+    <div class="who">
+      <a class="brand" href="#top"><img src="/hyprfm.svg" alt="" width="26" height="26" /><span>HyprFM</span></a>
+      <p>A keyboard-first file manager for people who chose Wayland on purpose.</p>
+    </div>
+    <nav aria-label="Project links">
+      <a href="https://github.com/soyeb-jim285/hyprfm">Source code ↗</a>
+      <a href="https://github.com/soyeb-jim285/hyprfm/releases">Releases ↗</a>
+      <a href="https://github.com/soyeb-jim285/hyprfm/issues">Report an issue ↗</a>
+      <a href="https://aur.archlinux.org/packages/hyprfm-git">AUR ↗</a>
+    </nav>
+    <p class="credits">The demo home in every recording is fictional. Its pictures, videos and music are public-domain or CC0 works: NASA imagery, Hokusai, Hiroshige, Van Gogh, Monet, Musopen recordings and several cats. <a href="https://github.com/soyeb-jim285/hyprfm/blob/brag-video/brag/assets/CREDITS.md">Full credits ↗</a></p>
+    <div class="legal"><span>MIT licensed · © {year} Soyeb Pervez Jim</span><span>Built with Qt 6, QML and C++</span></div>
+  </div>
+</footer>
+
+<style>
+  .foot { border-top: 1px solid var(--line); padding-block: 56px 40px; background: var(--page); }
+  .fgrid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px 48px; }
+  .who { display: grid; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; text-decoration: none; }
+  .who p { color: var(--subtext); max-width: 40ch; }
+  nav { display: grid; gap: 8px; align-content: start; }
+  nav a { color: var(--subtext); text-decoration: none; font-size: 15px; }
+  nav a:hover { color: var(--text); }
+  .credits { grid-column: 1 / -1; color: var(--muted); font-size: 14px; max-width: 90ch; }
+  .credits a { color: var(--subtext); }
+  .legal { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 12px var(--mono); color: var(--muted); letter-spacing: .06em; padding-top: 20px; border-top: 1px solid var(--line); }
+  @media (max-width: 700px) { .fgrid { grid-template-columns: minmax(0, 1fr); } }
+</style>
