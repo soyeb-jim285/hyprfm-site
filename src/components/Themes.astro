@@ -1,0 +1,80 @@
+---
+import themes from '../data/themes.json';
+// Order the swatches dark → light, the way people browse palettes.
+const order = ['catppuccin-mocha', 'rose-pine', 'rose-pine-moon', 'nord', 'dracula', 'gruvbox-dark', 'monokai-pro', 'catppuccin-latte', 'rose-pine-dawn', 'gruvbox-light'];
+const list = order.map((id) => themes.find((t) => t.id === id)!).filter(Boolean);
+const pretty = (id: string) => id.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+---
+
+<section class="section themes" id="themes">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Ten themes · live reload</span>
+        <h2 class="h-section">Change one line. <em>Watch it repaint.</em></h2>
+      </div>
+      <p class="lede">Themes are small TOML files. Point <code>theme</code> at one in <code>config.toml</code>, save, and HyprFM recolours while you watch. This page uses the same ten palettes: pick one and the whole site switches.</p>
+    </div>
+
+    <div class="tstage reveal">
+      <div class="swatches" role="radiogroup" aria-label="Theme">
+        {list.map((t) => (
+          <button type="button" role="radio" aria-checked={t.id === 'catppuccin-mocha' ? 'true' : 'false'} data-id={t.id}>
+            <span class="chips" aria-hidden="true">
+              {[t.base, t.surface, t.accent, t.success, t.error].map((c) => <i style={`background:${c}`}></i>)}
+            </span>
+            <span class="tname">{pretty(t.id)}</span>
+          </button>
+        ))}
+      </div>
+      <div class="right">
+        <div class="frame tframe">
+          {list.map((t) => <img src={`/media/s/theme-${t.id}.webp`} alt={`HyprFM in ${pretty(t.id)}`} data-id={t.id} class={t.id === 'catppuccin-mocha' ? 'on' : ''} width="2000" height="1250" loading="lazy" decoding="async" />)}
+        </div>
+        <pre class="toml" aria-label="config.toml"><span class="c"># ~/.config/hyprfm/config.toml</span>
+<span class="k">[general]</span>
+<span class="k">theme</span> = <span class="s" id="t-line">"catppuccin-mocha"</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var btns = [].slice.call(document.querySelectorAll('.themes .swatches button'));
+    var imgs = [].slice.call(document.querySelectorAll('.themes .tframe img'));
+    function mark(id) {
+      btns.forEach(function (b) { b.setAttribute('aria-checked', String(b.dataset.id === id)); });
+      imgs.forEach(function (im) { im.classList.toggle('on', im.dataset.id === id); });
+      document.getElementById('t-line').textContent = '"' + id + '"';
+    }
+    btns.forEach(function (b) { b.addEventListener('click', function () { window.applyHyprTheme(b.dataset.id, true); }); });
+    document.addEventListener('hyprfm-theme', function (e) { mark(e.detail); });
+    var cur = document.documentElement.dataset.theme;
+    if (cur) mark(cur);
+  })();
+</script>
+
+<style>
+  .lede code { font-size: .9em; color: var(--text); }
+  .tstage { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; align-items: start; }
+  .swatches { display: grid; gap: 8px; }
+  .swatches button { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--mantle); cursor: pointer; text-align: left; }
+  .swatches button:hover { border-color: var(--overlay); }
+  .swatches button[aria-checked='true'] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .chips { display: flex; flex: none; }
+  .chips i { width: 18px; height: 18px; border-radius: 50%; box-shadow: 0 0 0 2px var(--mantle); }
+  .chips i + i { margin-left: -5px; }
+  .tname { font-weight: 600; font-size: 15px; }
+  .right { display: grid; gap: 16px; }
+  .tframe { aspect-ratio: 16 / 10; }
+  .tframe img { position: absolute; inset: 0; opacity: 0; transition: opacity .3s; }
+  .tframe img.on { opacity: 1; }
+  .toml { margin: 0; padding: 16px 20px; border-radius: 12px; background: var(--mantle); border: 1px solid var(--line); font-size: 15px; line-height: 1.6; overflow-x: auto; }
+  .toml .c { color: var(--muted); } .toml .k { color: var(--accent); } .toml .s { color: var(--success); }
+  @media (max-width: 860px) {
+    .tstage { grid-template-columns: minmax(0, 1fr); }
+    .swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tframe img { transition: none; } }
+</style>

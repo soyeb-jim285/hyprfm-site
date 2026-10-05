@@ -1,0 +1,63 @@
+---
+// Medians of 7 runs from docs/performance-history.md (§5.1 and §5.4, 2026-09-20),
+// all three file managers measured in the same session on the author's laptop.
+const charts = [
+  { title: 'Launch to first window', unit: 'ms', note: 'lower is better', rows: [['HyprFM', 180], ['Dolphin', 194], ['Nautilus', 718]] },
+  { title: 'Second window, app already running', unit: 'ms', note: 'lower is better', rows: [['HyprFM', 81], ['Nautilus', 99], ['Dolphin', 197]] },
+  { title: 'Memory after opening ~ (PSS)', unit: 'MB', note: 'lower is better', rows: [['Dolphin', 64], ['HyprFM', 103], ['Nautilus', 103]] },
+];
+const W = 520, ROW = 46, LABEL = 96;
+---
+
+<section class="section speed" id="speed">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Measured, not claimed</span>
+        <h2 class="h-section">Fast where you <em>feel</em> it.</h2>
+      </div>
+      <p class="lede">One process serves every window, previews build on worker threads, and stale previews are dropped when you arrow past them. Opening a folder of 10,000 files takes about 40 ms. Here is how the launch compares, warts included.</p>
+    </div>
+
+    <div class="charts">
+      {charts.map((c) => {
+        const max = Math.max(...c.rows.map((r) => r[1] as number));
+        return (
+          <figure class="chart reveal">
+            <figcaption><strong>{c.title}</strong><span>{c.unit}, {c.note}</span></figcaption>
+            <svg viewBox={`0 0 ${W} ${c.rows.length * ROW + 6}`} role="img" aria-label={`${c.title}: ${c.rows.map((r) => `${r[0]} ${r[1]} ${c.unit}`).join(', ')}`}>
+              {c.rows.map((r, i) => {
+                const w = ((W - LABEL - 70) * (r[1] as number)) / max;
+                const us = r[0] === 'HyprFM';
+                return (
+                  <g transform={`translate(0 ${i * ROW + 4})`}>
+                    <text x="0" y="24" class={us ? 'lbl us' : 'lbl'}>{r[0]}</text>
+                    <rect x={LABEL} y="6" width={w} height="26" rx="6" class={us ? 'bar us' : 'bar'} />
+                    <text x={LABEL + w + 10} y="25" class="val">{r[1]}</text>
+                  </g>
+                );
+              })}
+            </svg>
+          </figure>
+        );
+      })}
+    </div>
+    <p class="method reveal">Medians of seven runs per app, measured in one session on the author’s laptop (2026-09-20). Since then HyprFM’s launch is down to 163 ms. Method and raw numbers: <a href="https://github.com/soyeb-jim285/hyprfm/blob/main/docs/performance-history.md">performance-history.md</a>.</p>
+  </div>
+</section>
+
+<style>
+  .charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .chart { margin: 0; padding: 20px 22px 14px; border-radius: 16px; background: var(--mantle); border: 1px solid var(--line); display: grid; gap: 14px; }
+  .chart figcaption { display: grid; gap: 2px; }
+  .chart strong { font-weight: 700; font-size: 15px; }
+  .chart figcaption span { color: var(--muted); font: 12px var(--mono); }
+  svg { width: 100%; height: auto; overflow: visible; }
+  .lbl { fill: var(--subtext); font: 600 14px var(--body); }
+  .lbl.us { fill: var(--text); }
+  .bar { fill: var(--surface); }
+  .bar.us { fill: var(--accent); }
+  .val { fill: var(--text); font: 600 13px var(--mono); font-variant-numeric: tabular-nums; }
+  .method { color: var(--muted); font-size: 14px; margin-top: 18px; max-width: 80ch; }
+  @media (max-width: 960px) { .charts { grid-template-columns: minmax(0, 1fr); } }
+</style>

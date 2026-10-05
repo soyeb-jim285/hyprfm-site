@@ -1,0 +1,65 @@
+---
+---
+
+<section class="section custom" id="customize">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Plain-text config</span>
+        <h2 class="h-section">Make it <em>yours</em>, in TOML.</h2>
+      </div>
+      <p class="lede">One <code>config.toml</code> holds everything: view, sidebar, radii, transparency, every shortcut, and your own right-click actions. It reloads on save. Ctrl+Shift+, opens it in your editor.</p>
+    </div>
+
+    <div class="grid2">
+      <figure class="reveal block">
+        <pre class="code"><span class="c"># Your own entries in the right-click menu,</span>
+<span class="c"># each with an optional shortcut of its own.</span>
+<span class="k">[[context_menu.actions]]</span>
+<span class="p">name</span>     = <span class="s">"Rate my rice"</span>
+<span class="p">command</span>  = <span class="s">"notify-send 'rice level' 'over 9000'"</span>
+<span class="p">types</span>    = [<span class="s">"dir"</span>, <span class="s">"image/*"</span>]
+<span class="p">shortcut</span> = <span class="s">"Ctrl+R"</span>
+
+<span class="k">[[context_menu.actions]]</span>
+<span class="p">name</span>    = <span class="s">"Set as wallpaper (swww)"</span>
+<span class="p">command</span> = <span class="s">"swww img %f"</span>
+<span class="p">types</span>   = [<span class="s">"image/*"</span>]
+
+<span class="c"># Rebind anything. Delete the line to get the default back.</span>
+<span class="k">[shortcuts]</span>
+<span class="p">quick_preview</span> = <span class="s">"Space"</span>
+<span class="p">split_view</span>    = <span class="s">"F3"</span></pre>
+        <figcaption>Types can be a folder, an extension, or a MIME pattern. <code>%f</code> is the selected file.</figcaption>
+      </figure>
+      <div class="shots">
+        <figure class="reveal">
+          <div class="frame zoom menu"><img src="/media/s/context-menu.webp" alt="HyprFM's context menu on an image, ending with the custom actions Rate my rice and Set as wallpaper" width="2000" height="1250" loading="lazy" decoding="async" /></div>
+          <figcaption>The two actions above, at the bottom of the menu. Shift+F10 opens it from the keyboard.</figcaption>
+        </figure>
+        <figure class="reveal">
+          <div class="frame zoom dialog"><img src="/media/s/shortcuts-search.webp" alt="HyprFM's keyboard shortcuts dialog, filtered by typing rename" width="2000" height="1250" loading="lazy" decoding="async" /></div>
+          <figcaption>Ctrl+? lists every shortcut with fuzzy search. Click one to record a new key.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lede code { font-size: .9em; color: var(--text); }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  figure { margin: 0; display: grid; gap: 12px; }
+  figcaption { color: var(--subtext); font-size: 15px; }
+  figcaption code { color: var(--text); }
+  .code { margin: 0; padding: 22px 24px; border-radius: 16px; background: var(--mantle); border: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; overflow-x: auto; }
+  .code .c { color: var(--muted); } .code .k { color: var(--accent); } .code .p { color: var(--text); } .code .s { color: var(--success); }
+  .shots { display: grid; gap: 24px; }
+  .zoom { aspect-ratio: 16 / 9; }
+  .zoom img { object-position: var(--pos, 50% 50%); }
+  .menu { --pos: 30% 30%; }
+  .menu img, .dialog img { width: 160%; height: auto; max-width: none; position: absolute; left: var(--x, -10%); top: var(--y, -10%); }
+  .menu { --x: -20%; --y: -10%; }
+  .dialog { --x: -30%; --y: -20%; }
+  @media (max-width: 960px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+</style>
