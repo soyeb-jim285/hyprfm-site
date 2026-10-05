@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Tour from '../components/Tour.astro';
-import Previews from '../components/Previews.astro';
 import QuickPreview from '../components/QuickPreview.astro';
 import Views from '../components/Views.astro';
 import NoMouse from '../components/NoMouse.astro';
@@ -24,7 +23,6 @@ const version = await getLatestVersion();
   <main id="main">
     <Hero version={version} />
     <Tour />
-    <Previews />
     <QuickPreview />
     <Views />
     <NoMouse />
