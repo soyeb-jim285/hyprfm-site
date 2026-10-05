@@ -2,14 +2,14 @@
 // Quick preview (Space) on real files from the demo home. Each shot is the
 // overlay as HyprFM draws it, metadata sidebar included.
 const shots = [
-  { still: 'peek-0', label: 'code-reviewer.jpg', note: 'Photos carry their camera EXIF: make, model, exposure, aperture, ISO.' },
-  { still: 'peek-3', label: 'pair-programmer.jpg', note: 'Arrow keys move to the next file without closing the overlay.' },
-  { still: 'peek-1', label: 'my-first-rice-1946.jpg', note: 'Dimensions, megapixels and bit depth for every image.' },
-  { still: 'qp-music', label: 'lofi-beats-to-rice-to.mp3', note: 'Music shows its tags: title, artist, album, genre, year.' },
-  { still: 'qp-video', label: 'launching-hyprfm.mp4', note: 'Video gets a poster frame, codec, resolution and frame rate.' },
-  { still: 'qp-pdf-1', label: 'thesis-final-FINAL-v3.pdf', note: 'PDFs page with ↑ and ↓, with author, producer and page size.' },
-  { still: 'qp-pdf-3', label: 'thesis · page 3', note: 'Page three, chart and all. The thesis is fictional.' },
-  { still: 'qp-md', label: 'todo.md', note: 'Markdown renders here too.' },
+  { still: 'peek-0', kind: 'Photo + EXIF', file: 'code-reviewer.jpg', note: 'Photos show their camera EXIF: make, model, exposure, aperture, ISO.' },
+  { still: 'peek-1', kind: 'Photo', file: 'my-first-rice-1946.jpg', note: 'Arrow keys move to the next file while the overlay stays open.' },
+  { still: 'peek-2', kind: 'Image info', file: 'my-setup-from-orbit.jpg', note: 'Dimensions, megapixels and bit depth for every image.' },
+  { still: 'qp-music', kind: 'Music tags', file: 'lofi-beats-to-rice-to.mp3', note: 'Title, artist, album, genre and year from the tags.' },
+  { still: 'qp-video', kind: 'Video', file: 'launching-hyprfm.mp4', note: 'A poster frame, plus codec, resolution and frame rate.' },
+  { still: 'qp-pdf-1', kind: 'PDF', file: 'thesis-final-FINAL-v3.pdf', note: 'Page one, with author, producer and page size. ↑ and ↓ turn pages.' },
+  { still: 'qp-pdf-3', kind: 'PDF, page 3', file: 'thesis-final-FINAL-v3.pdf', note: 'Page three, chart and all.' },
+  { still: 'qp-md', kind: 'Markdown', file: 'todo.md', note: 'Markdown renders here too.' },
 ];
 ---
 
@@ -25,14 +25,14 @@ const shots = [
 
     <div class="viewer reveal">
       <div class="frame stagebox">
-        {shots.map((s, i) => <img src={`/media/s/${s.still}.webp`} alt={`Quick preview of ${s.label}`} class={i === 0 ? 'on' : ''} width="2000" height="1250" loading="lazy" decoding="async" />)}
+        {shots.map((s, i) => <img src={`/media/s/${s.still}.webp`} alt={`Quick preview: ${s.kind}, ${s.file}`} class={i === 0 ? 'on' : ''} width="2000" height="1250" loading="lazy" decoding="async" />)}
       </div>
-      <p class="caption"><code id="qp-label">{shots[0].label}</code> <span id="qp-note">{shots[0].note}</span></p>
+      <p class="caption"><strong id="qp-kind">{shots[0].kind}</strong> <span id="qp-note">{shots[0].note}</span> <span class="file">file: <code id="qp-file">{shots[0].file}</code></span></p>
       <div class="strip" role="tablist" aria-label="Files to preview">
         {shots.map((s, i) => (
-          <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i} data-label={s.label} data-note={s.note}>
+          <button type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-i={i} data-kind={s.kind} data-file={s.file} data-note={s.note}>
             <img src={`/media/s/${s.still}.webp`} alt="" width="200" height="125" loading="lazy" decoding="async" />
-            <span>{s.label}</span>
+            <span>{s.kind}</span>
           </button>
         ))}
       </div>
@@ -47,7 +47,8 @@ const shots = [
     function go(i) {
       tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(i === j)); });
       big.forEach(function (im, j) { im.classList.toggle('on', i === j); });
-      document.getElementById('qp-label').textContent = tabs[i].dataset.label;
+      document.getElementById('qp-kind').textContent = tabs[i].dataset.kind;
+      document.getElementById('qp-file').textContent = tabs[i].dataset.file;
       document.getElementById('qp-note').textContent = tabs[i].dataset.note;
     }
     tabs.forEach(function (t, i) {
@@ -68,7 +69,9 @@ const shots = [
   .stagebox img { position: absolute; inset: 0; opacity: 0; transition: opacity .18s linear; }
   .stagebox img.on { opacity: 1; }
   .caption { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; margin: 18px 0 22px; color: var(--subtext); }
-  .caption code { color: var(--accent); font-size: 14px; }
+  .caption strong { color: var(--text); font-weight: 700; }
+  .caption .file { color: var(--muted); font-size: 14px; }
+  .caption .file code { font-size: 13px; }
   .strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(140px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 6px; }
   .strip button { display: grid; gap: 8px; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; color: var(--muted); }
   .strip img { border-radius: 8px; aspect-ratio: 16 / 10; object-fit: cover; width: 100%; opacity: .55; box-shadow: 0 0 0 1px var(--line); transition: opacity .15s; }
