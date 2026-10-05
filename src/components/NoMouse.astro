@@ -1,0 +1,92 @@
+---
+// Real loops and stills from CI. `pos` points each crop at the part of the
+// window the card is about.
+type Card = { title: string; text: string; keys: string[][]; loop?: string; still?: string; pos?: string; area: string };
+const cards: Card[] = [
+  { area: 'split', loop: 'split', title: 'Two panes, one keyboard.', keys: [['F3'], ['Ctrl', 'Alt', '→'], ['Ctrl', 'C'], ['Ctrl', 'V']],
+    text: 'F3 splits the window. Move focus between panes, copy on one side, paste on the other. Copies run in the background with speed, ETA and a pause button.' },
+  { area: 'undo', loop: 'undo', title: 'Deleted the thesis?', keys: [['Delete'], ['Ctrl', 'Z']],
+    text: 'Trash it, then Ctrl+Z puts it back where it was. Undo and redo cover moves, renames and copies, fifty steps deep.' },
+  { area: 'rename', still: 'rename', pos: '50% 62%', title: 'Bulk rename, previewed.', keys: [['F2']],
+    text: 'Select several files and press F2. Find and replace (regex included), add text, or number a sequence, and watch the new names before you commit.' },
+  { area: 'path', still: 'pathbar', pos: '0% 0%', title: 'Paths, with suggestions.', keys: [['Ctrl', 'L']],
+    text: 'Type a path and pick from what exists. Enter goes there.' },
+  { area: 'tabs', still: 'tabs', pos: '0% 0%', title: 'Tabs with their own history.', keys: [['Ctrl', 'T'], ['Ctrl', 'Tab']],
+    text: 'Back and forward per tab. Ctrl+Shift+T reopens the one you closed.' },
+  { area: 'search', still: 'search', pos: '50% 0%', title: 'Search as you type.', keys: [['Ctrl', 'F']],
+    text: 'Recursive search that keeps the window responsive. Uses fd when it is installed.' },
+];
+---
+
+<section class="section" id="keyboard">
+  <div class="shell">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Keyboard first</span>
+        <h2 class="h-section">Leave the mouse <em>where it is.</em></h2>
+      </div>
+      <p class="lede">Everything below was recorded with key presses only: the session it ran in had no pointer at all. Start typing a name and the selection jumps to it.</p>
+    </div>
+
+    <div class="bento">
+      {cards.map((c) => (
+        <article class={`card ${c.area} reveal`}>
+          <div class="frame media" style={c.pos ? `--pos:${c.pos}` : undefined}>
+            {c.loop
+              ? <video muted loop playsinline preload="none" poster={`/media/l/${c.loop}.jpg`} data-autoplay aria-label={c.title}>
+                  <source src={`/media/l/${c.loop}.webm`} type="video/webm" />
+                  <source src={`/media/l/${c.loop}.mp4`} type="video/mp4" />
+                </video>
+              : <img src={`/media/s/${c.still}.webp`} alt={c.title} width="2000" height="1250" loading="lazy" decoding="async" />}
+          </div>
+          <div class="body">
+            <div class="combo">{c.keys.map((k) => <span class="keys">{k.map((x, i) => <>{i > 0 && <span class="plus">+</span>}<span class="key">{x}</span></>)}</span>)}</div>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    // Play loops only while they are on screen; never for reduced motion.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { v.preload = 'auto'; v.play().catch(function () {}); } else v.pause();
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('video[data-autoplay]').forEach(function (v) { io.observe(v); });
+  })();
+</script>
+
+<style>
+  .bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; grid-template-areas:
+    'split split split split undo undo'
+    'split split split split undo undo'
+    'rename rename path path tabs tabs'
+    'rename rename search search search search'; }
+  .card { display: flex; flex-direction: column; gap: 16px; background: var(--mantle); border: 1px solid var(--line); border-radius: 18px; padding: 14px; min-width: 0; }
+  .split { grid-area: split; } .undo { grid-area: undo; } .rename { grid-area: rename; }
+  .path { grid-area: path; } .tabs { grid-area: tabs; } .search { grid-area: search; }
+  .media { aspect-ratio: 16 / 10; border-radius: 10px; box-shadow: 0 0 0 1px var(--line); }
+  .undo .media, .rename .media { aspect-ratio: 4 / 3; }
+  .path .media, .tabs .media { aspect-ratio: 4 / 3; }
+  .search .media { aspect-ratio: 21 / 9; }
+  .media img, .media video { object-position: var(--pos, 50% 50%); }
+  .path .media img, .tabs .media img { width: 220%; height: auto; max-width: none; position: absolute; left: 0; top: 0; }
+  .body { display: grid; gap: 8px; padding: 2px 6px 6px; }
+  .combo { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; }
+  h3 { font: 400 1.75rem/1.05 var(--display); }
+  .body p { color: var(--subtext); font-size: 15.5px; }
+  @media (max-width: 960px) {
+    .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: 'split split' 'undo rename' 'path tabs' 'search search'; }
+  }
+  @media (max-width: 600px) {
+    .bento { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'split' 'undo' 'rename' 'path' 'tabs' 'search'; }
+  }
+</style>
