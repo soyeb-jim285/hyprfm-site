@@ -18,21 +18,25 @@ const methods = [
 <section class="hero" id="top">
   <div class="shell">
     <div class="statement">
-      <h1 class="reveal">The file manager your <em>rice</em> deserves.</h1>
+      <div class="opening reveal">
+        <p class="project-note">Open source · Qt 6 / QML · Wayland</p>
+        <h1>A file manager for Wayland.</h1>
+        <p class="lede">Browse with the keyboard. Preview without opening. Keep your terminal, files and theme in one place.</p>
+        <div class="actions"><a class="get" href="#install">Install HyprFM <span aria-hidden="true">↓</span></a><a href="https://github.com/soyeb-jim285/hyprfm">Read the source ↗</a></div>
+      </div>
       <div class="side reveal">
-        <p class="lede">Fast, keyboard-first and Wayland-native. Miller columns, a preview for every file, and ten themes that reload the moment you save.</p>
+        <p class="install-label">Install from your terminal</p>
         <div class="install">
           <div class="distro" role="group" aria-label="Install method">
             {methods.map((m, i) => <button type="button" aria-pressed={i === 0 ? 'true' : 'false'} data-cmd={m.cmd}>{m.label}</button>)}
           </div>
           <div class="cmd"><code id="hero-cmd">{methods[0].cmd}</code><button type="button" id="hero-copy">Copy</button></div>
-          <a class="more" href="#install">Flatpak setup, AppImage download and building from source ↓</a>
+          <a class="more" href="#install">Setup instructions for every package →</a>
         </div>
       </div>
     </div>
 
     <div class="stage reveal" id="try">
-      <div class="glow" aria-hidden="true"></div>
       <div class="frame window" id="hero-win" role="img" aria-label="HyprFM, recorded. Use the arrow keys and Space to step through it.">
         {miller.map((f, i) => <img src={f.src} alt="" data-set="miller" data-name={f.name} class={i === 0 ? 'on' : ''} width="2000" height="1250" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />)}
         {peek.map((f) => <img src={f.src} alt="" data-set="peek" data-name={f.name} width="2000" height="1250" loading="lazy" decoding="async" />)}
@@ -40,23 +44,24 @@ const methods = [
       <div class="controls">
         <p class="state"><span class="eyebrow" id="hero-mode">Miller columns</span> <code id="hero-file">{miller[0].name}</code></p>
         <div class="pad">
-          <span class="hint">Your arrow keys and Space work here, or tap:</span>
+          <span class="hint">Try it:</span>
           <button class="key" type="button" data-k="ArrowUp" aria-label="Up">↑</button>
           <button class="key" type="button" data-k="ArrowDown" aria-label="Down">↓</button>
           <button class="key" type="button" data-k="ArrowLeft" aria-label="Left">←</button>
           <button class="key" type="button" data-k="ArrowRight" aria-label="Right">→</button>
           <button class="key wide" type="button" data-k=" ">Space</button>
           <button class="key" type="button" data-k="Escape">Esc</button>
+          <button class="play" id="hero-play" type="button" aria-pressed="false">Play demo</button>
         </div>
       </div>
-      <p class="note">Every frame is a recording of the real app on a headless Wayland session. Nothing here is a mock-up.</p>
+      <p class="note">Interactive walkthrough using real app captures. Arrow keys change the selection; Space opens a preview.</p>
     </div>
 
     <dl class="facts reveal">
-      <div><dt>Launch to window</dt><dd>180 ms</dd></div>
-      <div><dt>Bundled themes</dt><dd>10</dd></div>
-      <div><dt>Rebindable shortcuts</dt><dd>45</dd></div>
-      <div><dt>Licence</dt><dd>MIT</dd></div>
+      <div><dt>Views</dt><dd>Grid, Miller & list</dd></div>
+      <div><dt>Appearance</dt><dd>10 bundled themes</dd></div>
+      <div><dt>Desktop</dt><dd>Wayland native</dd></div>
+      <div><dt>Source</dt><dd>MIT licensed</dd></div>
     </dl>
   </div>
 </section>
@@ -91,10 +96,16 @@ const methods = [
       e.preventDefault(); stop(); press(e.key);
     });
     document.querySelectorAll('.pad .key').forEach(function (b) { b.addEventListener('click', function () { stop(); press(b.dataset.k); }); });
-    // An idle walk-through until the visitor presses something.
+    // The walkthrough only advances when the visitor asks it to.
     var script = ['ArrowDown', 'ArrowDown', 'ArrowDown', 'ArrowDown', ' ', 'ArrowRight', 'ArrowRight', 'ArrowRight', ' ', 'ArrowUp', 'ArrowUp', 'ArrowUp', 'ArrowUp'], step = 0;
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(function () { press(script[step++ % script.length]); }, 1700);
+    var play = document.getElementById('hero-play');
+    function stop() { if (timer) { clearInterval(timer); timer = null; } play.textContent = 'Play demo'; play.setAttribute('aria-pressed', 'false'); }
+    play.addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      timer = setInterval(function () { press(script[step++ % script.length]); }, 1700);
+      play.textContent = 'Pause demo'; play.setAttribute('aria-pressed', 'true');
+    });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
 
     document.querySelectorAll('.distro button').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -112,44 +123,50 @@ const methods = [
 </script>
 
 <style>
-  .hero { padding-block: clamp(40px, 6vw, 72px) clamp(64px, 8vw, 104px); }
-  .statement { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px 56px; align-items: end; margin-bottom: 40px; }
-  h1 { font: 400 clamp(2.8rem, 7vw, 5.8rem)/.96 var(--display); letter-spacing: -.012em; }
-  h1 em { color: var(--error); }
-  .side { display: grid; gap: 22px; }
-  .lede { color: var(--subtext); }
+  .hero { padding-block: clamp(36px, 5vw, 64px) 36px; }
+  .statement { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, .8fr); gap: 32px 64px; align-items: end; margin-bottom: 38px; }
+  .opening { display: grid; gap: 20px; }
+  .project-note, .install-label { font: 400 12px/1.5 var(--mono); color: var(--subtext); }
+  h1 { max-width: 13ch; font: 650 clamp(2.6rem, 5vw, 4.25rem)/1.04 var(--display); letter-spacing: -.05em; text-wrap: balance; }
+  .actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 4px; }
+  .actions a { font-size: 14px; font-weight: 600; text-decoration: none; }
+  .get { display: inline-flex; align-items: center; gap: 26px; padding: 11px 17px; background: var(--text); color: var(--crust); border-radius: 6px; }
+  .get:hover { background: var(--subtext); }
+  .side { display: grid; gap: 14px; padding-bottom: 4px; }
+  .lede { color: var(--subtext); max-width: 47ch; font-size: 16px; }
   .install { display: grid; gap: 10px; }
   .distro { display: flex; gap: 6px; flex-wrap: wrap; }
-  .distro button { font: 600 12px var(--mono); letter-spacing: .04em; color: var(--subtext); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; cursor: pointer; }
+  .distro button { font: 400 11px var(--mono); color: var(--subtext); background: none; border: 1px solid var(--line); border-radius: 5px; padding: 7px 10px; cursor: pointer; }
   .distro button[aria-pressed='true'] { color: var(--crust); background: var(--text); border-color: var(--text); }
-  .cmd { display: flex; align-items: center; gap: 12px; background: var(--mantle); border: 1px solid var(--line); border-radius: 12px; padding: 10px 10px 10px 16px; min-width: 0; }
-  .cmd code { font-size: 15px; white-space: nowrap; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
+  .cmd { display: flex; align-items: center; gap: 12px; background: var(--mantle); border: 1px solid var(--line); border-radius: 6px; padding: 8px 8px 8px 12px; min-width: 0; }
+  .cmd code { font-size: 12px; white-space: nowrap; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; }
   .cmd code::before { content: '$ '; color: var(--success); }
-  .cmd button { font-weight: 700; font-size: 13px; color: var(--crust); background: var(--accent); border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; flex: none; }
-  .more { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .cmd button { font-weight: 600; font-size: 12px; color: var(--crust); background: var(--text); border: 0; border-radius: 4px; padding: 7px 10px; cursor: pointer; flex: none; }
+  .more { color: var(--subtext); font-size: 12px; text-decoration: none; }
   .more:hover { color: var(--text); }
 
   .stage { position: relative; }
-  .glow { position: absolute; inset: 8% 6% -8%; z-index: -1; filter: blur(48px); background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 30%, transparent), transparent); }
   .window { aspect-ratio: 16 / 10; }
   .window img { position: absolute; inset: 0; opacity: 0; transition: opacity .12s linear; }
   .window img.on { opacity: 1; }
-  .controls { display: flex; justify-content: space-between; align-items: center; gap: 16px 24px; flex-wrap: wrap; padding-top: 20px; }
+  .controls { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; padding-top: 16px; }
   .state { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
-  .state code { font-size: 14px; color: var(--text); }
-  .pad { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 17px; }
+  .state code { font-size: 11px; color: var(--subtext); }
+  .pad { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 14px; }
   .pad .key { cursor: pointer; transition: transform .06s, box-shadow .06s; }
   .pad .key.down, .pad .key:active { transform: translateY(3px); box-shadow: 0 0 0 var(--crust), 0 3px 8px var(--shadow); }
-  .hint { color: var(--muted); font-size: 14px; margin-right: 4px; }
-  .note { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  .hint { color: var(--subtext); font-size: 12px; margin-right: 4px; }
+  .play { border: 0; border-left: 1px solid var(--line); background: none; padding: 6px 0 6px 12px; margin-left: 6px; cursor: pointer; font-size: 12px; }
+  .note { color: var(--subtext); font-size: 12px; margin-top: 12px; }
 
-  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 56px 0 0; border-top: 1px solid var(--line); }
-  .facts div { padding: 18px 18px 0 0; }
-  .facts dt { font: 600 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .facts dd { margin: 6px 0 0; font: 400 clamp(1.8rem, 3vw, 2.6rem)/1 var(--display); font-variant-numeric: tabular-nums; }
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 36px 0 0; border-block: 1px solid var(--line); }
+  .facts div { padding: 18px 18px 18px 0; }
+  .facts dt { font: 400 11px var(--mono); color: var(--subtext); }
+  .facts dd { margin: 4px 0 0; font: 500 14px/1.5 var(--display); }
   @media (max-width: 860px) {
     .statement { grid-template-columns: minmax(0, 1fr); }
     .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 12px; }
   }
   @media (prefers-reduced-motion: reduce) { .window img { transition: none; } }
+  @media (max-width: 600px) { .state code { display: none; } .side { border-top: 1px solid var(--line); padding-top: 20px; } .facts { column-gap: 20px; } }
 </style>

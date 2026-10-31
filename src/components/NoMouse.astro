@@ -22,10 +22,9 @@ const cards: Card[] = [
   <div class="shell">
     <div class="section-head reveal">
       <div>
-        <span class="eyebrow">Keyboard first</span>
-        <h2 class="h-section">Leave the mouse <em>where it is.</em></h2>
+        <h2 class="h-section">The everyday stuff, on the keyboard.</h2>
       </div>
-      <p class="lede">Everything below was recorded with key presses only: the session it ran in had no pointer at all. Start typing a name and the selection jumps to it.</p>
+      <p class="lede">Split a folder, rename a batch, reopen a tab. The shortcuts below work in the app; type a filename to jump straight to it.</p>
     </div>
 
     <div class="bento">
@@ -70,7 +69,7 @@ const cards: Card[] = [
     'split split split split undo undo'
     'rename rename path path tabs tabs'
     'rename rename search search search search'; }
-  .card { display: flex; flex-direction: column; gap: 16px; background: var(--mantle); border: 1px solid var(--line); border-radius: 18px; padding: 14px; min-width: 0; }
+  .card { display: flex; flex-direction: column; gap: 16px; padding: 0; min-width: 0; }
   .split { grid-area: split; } .undo { grid-area: undo; } .rename { grid-area: rename; }
   .path { grid-area: path; } .tabs { grid-area: tabs; } .search { grid-area: search; }
   .media { aspect-ratio: 16 / 10; border-radius: 10px; box-shadow: 0 0 0 1px var(--line); }
@@ -79,10 +78,10 @@ const cards: Card[] = [
   .search .media { aspect-ratio: 21 / 9; }
   .media img, .media video { object-position: var(--pos, 50% 50%); }
   .path .media img, .tabs .media img { width: 220%; height: auto; max-width: none; position: absolute; left: 0; top: 0; }
-  .body { display: grid; gap: 8px; padding: 2px 6px 6px; }
+  .body { display: grid; gap: 8px; padding: 2px 0 14px; }
   .combo { display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; }
-  h3 { font: 400 1.75rem/1.05 var(--display); }
-  .body p { color: var(--subtext); font-size: 15.5px; }
+  h3 { font: 600 18px/1.4 var(--display); letter-spacing: -.025em; }
+  .body p { color: var(--subtext); font-size: 14px; }
   @media (max-width: 960px) {
     .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: 'split split' 'undo rename' 'path tabs' 'search search'; }
   }

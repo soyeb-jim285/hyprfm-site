@@ -5,10 +5,9 @@
   <div class="shell">
     <div class="section-head reveal">
       <div>
-        <span class="eyebrow">Plain-text config</span>
-        <h2 class="h-section">Make it <em>yours</em>, in TOML.</h2>
+        <h2 class="h-section">Your defaults, in one file.</h2>
       </div>
-      <p class="lede">One <code>config.toml</code> holds everything: view, sidebar, radii, transparency, every shortcut, and your own right-click actions. It reloads on save. Ctrl+Shift+, opens it in your editor.</p>
+      <p class="lede">Views, shortcuts, transparency and custom right-click actions live in <code>config.toml</code>. Edit it directly or use Settings. Both write the same file.</p>
     </div>
 
     <div class="grid2">
@@ -52,8 +51,8 @@
   figure { margin: 0; display: grid; gap: 12px; }
   figcaption { color: var(--subtext); font-size: 15px; }
   figcaption code { color: var(--text); }
-  .code { margin: 0; padding: 22px 24px; border-radius: 16px; background: var(--mantle); border: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; overflow-x: auto; }
-  .code .c { color: var(--muted); } .code .k { color: var(--accent); } .code .p { color: var(--text); } .code .s { color: var(--success); }
+  .code { margin: 0; padding: 22px 24px; border-radius: 6px; background: var(--mantle); border: 1px solid var(--line); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+  .code .c { color: var(--subtext); } .code .k { color: var(--accent); } .code .p { color: var(--text); } .code .s { color: color-mix(in srgb, var(--success) 45%, var(--text)); }
   .shots { display: grid; gap: 24px; }
   .zoom { aspect-ratio: 16 / 9; }
   .zoom img { object-position: var(--pos, 50% 50%); }

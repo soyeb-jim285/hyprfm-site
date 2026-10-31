@@ -7,6 +7,8 @@ import QuickPreview from '../components/QuickPreview.astro';
 import Views from '../components/Views.astro';
 import NoMouse from '../components/NoMouse.astro';
 import Themes from '../components/Themes.astro';
+import Transparency from '../components/Transparency.astro';
+import Workspace from '../components/Workspace.astro';
 import Customize from '../components/Customize.astro';
 import Speed from '../components/Speed.astro';
 import Shortcuts from '../components/Shortcuts.astro';
@@ -22,14 +24,16 @@ const version = await getLatestVersion();
   <Nav version={version} />
   <main id="main">
     <Hero version={version} />
-    <Tour />
-    <QuickPreview />
     <Views />
+    <QuickPreview />
+    <Transparency />
+    <Workspace />
     <NoMouse />
     <Themes />
     <Customize />
     <Speed />
     <Shortcuts />
+    <Tour />
     <Install version={version} />
   </main>
   <Footer />

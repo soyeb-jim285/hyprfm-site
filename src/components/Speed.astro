@@ -13,10 +13,9 @@ const W = 520, ROW = 46, LABEL = 96;
   <div class="shell">
     <div class="section-head reveal">
       <div>
-        <span class="eyebrow">Measured, not claimed</span>
-        <h2 class="h-section">Fast where you <em>feel</em> it.</h2>
+        <h2 class="h-section">Startup, measured.</h2>
       </div>
-      <p class="lede">One process serves every window, previews build on worker threads, and stale previews are dropped when you arrow past them. Opening a folder of 10,000 files takes about 40 ms. Here is how the launch compares, warts included.</p>
+      <p class="lede">Seven-run medians, measured on the same laptop in the same session. The method and raw numbers are linked below.</p>
     </div>
 
     <div class="charts">
@@ -48,16 +47,16 @@ const W = 520, ROW = 46, LABEL = 96;
 
 <style>
   .charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  .chart { margin: 0; padding: 20px 22px 14px; border-radius: 16px; background: var(--mantle); border: 1px solid var(--line); display: grid; gap: 14px; }
+  .chart { margin: 0; padding: 20px 0 14px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
   .chart figcaption { display: grid; gap: 2px; }
   .chart strong { font-weight: 700; font-size: 15px; }
-  .chart figcaption span { color: var(--muted); font: 12px var(--mono); }
+  .chart figcaption span { color: var(--subtext); font: 11px var(--mono); }
   svg { width: 100%; height: auto; overflow: visible; }
   .lbl { fill: var(--subtext); font: 600 14px var(--body); }
   .lbl.us { fill: var(--text); }
   .bar { fill: var(--surface); }
   .bar.us { fill: var(--accent); }
   .val { fill: var(--text); font: 600 13px var(--mono); font-variant-numeric: tabular-nums; }
-  .method { color: var(--muted); font-size: 14px; margin-top: 18px; max-width: 80ch; }
+  .method { color: var(--subtext); font-size: 12px; margin-top: 18px; max-width: 90ch; }
   @media (max-width: 960px) { .charts { grid-template-columns: minmax(0, 1fr); } }
 </style>

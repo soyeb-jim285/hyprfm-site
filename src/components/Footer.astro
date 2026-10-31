@@ -6,7 +6,7 @@ const year = new Date().getFullYear();
   <div class="shell fgrid">
     <div class="who">
       <a class="brand" href="#top"><img src="/hyprfm.svg" alt="" width="26" height="26" /><span>HyprFM</span></a>
-      <p>A keyboard-first file manager for people who chose Wayland on purpose.</p>
+      <p>A keyboard-first file manager for Wayland. Built by Soyeb Pervez Jim.</p>
     </div>
     <nav aria-label="Project links">
       <a href="https://github.com/soyeb-jim285/hyprfm">Source code ↗</a>
@@ -28,8 +28,8 @@ const year = new Date().getFullYear();
   nav { display: grid; gap: 8px; align-content: start; }
   nav a { color: var(--subtext); text-decoration: none; font-size: 15px; }
   nav a:hover { color: var(--text); }
-  .credits { grid-column: 1 / -1; color: var(--muted); font-size: 14px; max-width: 90ch; }
+  .credits { grid-column: 1 / -1; color: var(--subtext); font-size: 12px; max-width: 100ch; }
   .credits a { color: var(--subtext); }
-  .legal { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 12px var(--mono); color: var(--muted); letter-spacing: .06em; padding-top: 20px; border-top: 1px solid var(--line); }
+  .legal { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 11px/1.6 var(--mono); color: var(--subtext); padding-top: 20px; border-top: 1px solid var(--line); }
   @media (max-width: 700px) { .fgrid { grid-template-columns: minmax(0, 1fr); } }
 </style>

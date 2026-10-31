@@ -11,12 +11,23 @@ const { version } = Astro.props;
     </a>
     <a class="ver" href="https://github.com/soyeb-jim285/hyprfm/releases/latest">{version}</a>
     <nav class="links" aria-label="Sections">
-      <a href="#quick-preview">Preview</a>
+      <a href="#views">Views</a>
+      <a href="#transparency">Transparency</a>
       <a href="#keyboard">Keyboard</a>
       <a href="#themes">Themes</a>
-      <a href="#speed">Speed</a>
       <a href="#install">Install</a>
     </nav>
+    <details class="mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile sections">
+        <a href="#views">Views & previews</a>
+        <a href="#transparency">Transparency & blur</a>
+        <a href="#workspace">Built-in terminal</a>
+        <a href="#keyboard">Keyboard workflows</a>
+        <a href="#themes">Themes</a>
+        <a href="#install">Install HyprFM</a>
+      </nav>
+    </details>
     <button class="mode" type="button" id="mode-toggle" aria-label="Switch between light and dark">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
     </button>
@@ -30,18 +41,34 @@ const { version } = Astro.props;
     var light = r.dataset.mode ? r.dataset.mode === 'light' : matchMedia('(prefers-color-scheme: light)').matches;
     window.applyHyprTheme(light ? 'catppuccin-mocha' : 'catppuccin-latte', true);
   });
+  document.querySelectorAll('.mobile-menu a').forEach(function (link) {
+    link.addEventListener('click', function () { link.closest('details').open = false; });
+  });
+  document.querySelector('.mobile-menu').addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && event.currentTarget.open) {
+      event.currentTarget.open = false;
+      event.currentTarget.querySelector('summary').focus();
+    }
+  });
 </script>
 
 <style>
-  .nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: color-mix(in srgb, var(--page) 78%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
-  .nav-in { display: flex; align-items: center; gap: 18px; min-height: 64px; flex-wrap: wrap; }
+  .nav { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); background: color-mix(in srgb, var(--page) 88%, transparent); border-bottom: 1px solid var(--line); }
+  .nav-in { position: relative; display: flex; align-items: center; gap: 16px; min-height: 68px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -.01em; text-decoration: none; }
-  .ver { font: 600 12px var(--mono); color: var(--accent); border: 1px solid var(--line); padding: 3px 9px; border-radius: 999px; text-decoration: none; }
+  .ver { font: 400 11px var(--mono); color: var(--subtext); text-decoration: none; }
   .links { display: flex; gap: 22px; margin-left: auto; }
-  .links a { color: var(--subtext); text-decoration: none; font-size: 15px; }
+  .links a { color: var(--subtext); text-decoration: none; font-size: 13px; }
   .links a:hover { color: var(--text); }
-  .mode { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: none; cursor: pointer; color: var(--subtext); }
+  .mode { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 5px; border: 1px solid var(--line); background: none; cursor: pointer; color: var(--subtext); flex: none; }
   .mode:hover { color: var(--text); }
-  .gh { font-weight: 600; font-size: 14px; text-decoration: none; padding: 8px 14px; border-radius: 10px; background: var(--text); color: var(--crust); }
-  @media (max-width: 760px) { .links { display: none; } .mode { margin-left: auto; } }
+  .gh { font-weight: 600; font-size: 12px; text-decoration: none; padding: 7px 12px; border-radius: 5px; border: 1px solid var(--overlay); }
+  .mobile-menu { display: none; margin-left: auto; }
+  .mobile-menu summary { cursor: pointer; font-size: 13px; padding: 8px 4px; }
+  .mobile-menu nav { position: absolute; top: 60px; right: var(--gutter); left: var(--gutter); padding: 12px; border: 1px solid var(--overlay); border-radius: 6px; background: var(--page); box-shadow: 0 12px 24px var(--shadow); }
+  .mobile-menu a { display: block; padding: 10px 12px; text-decoration: none; font-size: 14px; }
+  .mobile-menu a:hover { background: var(--mantle); }
+  @media (max-width: 940px) { .links { display: none; } .mobile-menu { display: block; } }
+  @media (max-width: 450px) { .nav-in { gap: 12px; } .brand { font-size: 16px; gap: 7px; } .ver { display: none; } }
+  @media (prefers-reduced-transparency: reduce) { .nav { background: var(--page); backdrop-filter: none; } }
 </style>

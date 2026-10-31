@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1600, height=1000" />
+  <title>HyprFM — one folder, three views</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: 'Instrument Serif'; src: url('assets/display.woff2') format('woff2'); }
+    @font-face { font-family: 'JetBrains Mono'; src: url('assets/mono.woff2') format('woff2'); }
+    :root { --bg: #11111b; --fg: #cdd6f4; --surface: #181825; --border: #45475a; --muted: #bac2de; --accent: #89b4fa; --brand: #89b4fa; --radius: 14px; --font-body: 'JetBrains Mono', monospace; --font-mono: 'JetBrains Mono', monospace; }
+    * { box-sizing: border-box; margin: 0; }
+    html, body { width: 1600px; height: 1000px; overflow: hidden; background: var(--bg); }
+    #overview { position: relative; width: 100%; height: 100%; color: var(--fg); }
+    .heading { position: absolute; top: 30px; left: 64px; right: 64px; display: flex; align-items: center; justify-content: space-between; }
+    h1 { font: 400 60px/1.1 'Instrument Serif', serif; }
+    .brand { font: 400 26px/1.4 'JetBrains Mono', monospace; color: var(--accent); }
+    #screens { position: absolute; inset: 0; }
+  </style>
+</head>
+<body>
+  <div data-hf-id="hf-x45m" id="overview" data-composition-id="overview" data-width="1600" data-height="1000" data-duration="8" data-fps="30">
+    <div data-hf-id="hf-utnn" id="screens" class="clip" data-composition-id="screen-flow-carousel" data-composition-src="compositions/components/screen-flow-carousel.html" data-start="0" data-duration="8" data-track-index="0" data-width="1600" data-height="1000"></div>
+    <header data-hf-id="hf-7fky" class="heading"><h1 data-hf-id="hf-l4y6">One folder. Three ways to read it.</h1><span data-hf-id="hf-r23c" class="brand">HyprFM</span></header>
+  </div>
+  <template data-slot="screen-flow-carousel-screen-1"><img src="assets/grid.webp" alt="HyprFM grid view" /></template>
+  <template data-slot="screen-flow-carousel-screen-2"><img src="assets/miller.webp" alt="HyprFM Miller columns" /></template>
+  <template data-slot="screen-flow-carousel-screen-3"><img src="assets/detailed.webp" alt="HyprFM detailed view" /></template>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo('.heading', { opacity: 1 }, { opacity: 1, duration: 0.35 }, 0);
+    window.__timelines['overview'] = tl;
+  </script>
+</body>
+</html>

@@ -6,8 +6,8 @@ Landing page for [HyprFM](https://github.com/soyeb-jim285/hyprfm), deployed to
 ## Stack
 
 - [Astro](https://astro.build) 5 — static site generator
-- [Tailwind CSS](https://tailwindcss.com) — utility-first styles
-- Self-hosted [Inter](https://rsms.me/inter/) + [JetBrains Mono](https://www.jetbrains.com/lp/mono/) via Fontsource
+- Scoped Astro CSS with shared theme tokens
+- Self-hosted Manrope and JetBrains Mono via Fontsource
 - Pure HTML + small inline scripts (no React, no component runtime) —
   the whole site is static HTML after build
 
@@ -34,15 +34,16 @@ On push to `main`, `.github/workflows/deploy.yml` builds the Astro site and
 publishes to GitHub Pages using the native `actions/deploy-pages` action.
 Custom domain is configured via `public/CNAME`.
 
-## Swapping placeholder media
+## Product media
 
-All screenshot placeholders live in `public/screenshots/` as SVG files. Replace
-any file with a real PNG keeping the same base name (e.g.
-`grid-view.svg` → `grid-view.png`) and update the `src` path in the
-corresponding component under `src/components/`.
+Real app screenshots live in `public/media/s/`; short clips and their posters
+live in `public/media/l/`. The full tour is `public/media/tour.mp4`.
 
-## Placeholder copy
+The transparency section compares matching opaque and compositor-blurred
+captures, with a real toggle recording underneath. The workspace section shows
+the built-in terminal and Git status. The views section uses an interactive
+screenshot picker for Grid, Miller and Detailed views.
 
-Prose marked `TODO(jim):` in the component files should be rewritten in the
-maintainer's own voice before first deploy. Everything else (install commands,
-button labels, section headings) is factual and can stay as-is.
+Capture provenance and editable animation source are in [`media-source/`](media-source/README.md).
+Videos are click-to-play with `preload="none"`; the existing keyboard-demo loops
+only autoplay on screen when reduced motion is not requested.

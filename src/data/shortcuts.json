@@ -181,6 +181,12 @@
  },
  {
   "group": "View",
+  "action": "toggle_terminal",
+  "label": "Toggle Built-in Terminal",
+  "keys": "F4"
+ },
+ {
+  "group": "View",
   "action": "toggle_hidden",
   "label": "Toggle Hidden Files",
   "keys": "Ctrl+H"

@@ -35,8 +35,8 @@ const extras = [
   <div class="shell">
     <div class="section-head reveal">
       <div>
-        <span class="eyebrow">Get HyprFM · {version}</span>
-        <h2 class="h-section">Ready when your <em>desktop</em> is.</h2>
+        <span class="eyebrow">Current release · {version}</span>
+        <h2 class="h-section">Install HyprFM.</h2>
       </div>
       <p class="lede">HyprFM needs a Wayland session. It is built for Hyprland and runs on GNOME and KDE Plasma too. <a href="https://github.com/soyeb-jim285/hyprfm/releases/latest">Release notes ↗</a></p>
     </div>
@@ -89,21 +89,22 @@ const extras = [
 
 <style>
   .lede a { color: var(--accent); }
-  .box { border: 1px solid var(--line); border-radius: 16px; background: var(--mantle); overflow: hidden; }
+  .install { border-top: 1px solid var(--line); }
+  .box { border: 1px solid var(--line); border-radius: 6px; background: var(--mantle); overflow: hidden; }
   .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
   .tabs button { padding: 14px 20px; background: none; border: 0; border-right: 1px solid var(--line); cursor: pointer; color: var(--subtext); font-weight: 600; font-size: 15px; }
   .tabs button[aria-selected='true'] { color: var(--crust); background: var(--text); }
   .panel { padding: 20px 22px 22px; display: grid; gap: 14px; }
   .ptop { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
   .ptop p { color: var(--subtext); font-size: 15px; }
-  .copy { flex: none; font-weight: 700; font-size: 13px; padding: 8px 14px; border-radius: 8px; border: 0; background: var(--accent); color: var(--crust); cursor: pointer; }
+  .copy { flex: none; font-weight: 600; font-size: 13px; padding: 8px 14px; border-radius: 5px; border: 0; background: var(--text); color: var(--crust); cursor: pointer; }
   pre { margin: 0; padding: 16px 18px; border-radius: 10px; background: var(--crust); overflow-x: auto; font-size: 14px; line-height: 1.7; }
   .extras { margin-top: 36px; display: grid; gap: 14px; }
-  .extras h3 { font: 400 1.6rem/1.1 var(--display); }
+  .extras h3 { font: 600 16px/1.5 var(--display); }
   .extras ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-  .extras li { display: grid; gap: 2px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line); }
+  .extras li { display: grid; gap: 4px; padding: 12px 0; border-top: 1px solid var(--line); }
   .extras li code { color: var(--accent); font-size: 14px; }
   .extras li span { color: var(--subtext); font-size: 14px; }
-  .extras > p { color: var(--muted); font-size: 14px; }
+  .extras > p { color: var(--subtext); font-size: 13px; }
   @media (max-width: 860px) { .extras ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ptop { flex-direction: column; align-items: flex-start; } }
 </style>

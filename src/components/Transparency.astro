@@ -1,0 +1,111 @@
+---
+const blurConfig = `decoration {
+    blur {
+        enabled = true
+        size = 12
+        passes = 4
+    }
+}`;
+---
+
+<section class="section transparency" id="transparency">
+  <div class="shell">
+    <div class="intro reveal">
+      <h2 class="h-section">Transparent panels. Blurred wallpaper.</h2>
+      <p class="lede">Let the desktop show through without losing your place. Hyprland blurs the wallpaper behind the panels; filenames, icons and previews stay sharp.</p>
+    </div>
+
+    <figure class="reveal">
+      <div class="frame comparison" id="transparency-compare" style="--split:50%">
+        <img src="/media/s/transparency-off.webp" alt="HyprFM with opaque panels over a blue and rose landscape wallpaper" width="1600" height="1000" loading="lazy" decoding="async" />
+        <img class="transparent" src="/media/s/transparency-on.webp" alt="The same HyprFM window with the wallpaper visible and blurred behind its panels" width="1600" height="1000" loading="lazy" decoding="async" />
+        <span class="divider" aria-hidden="true"><span>↔</span></span>
+      </div>
+      <div class="comparison-labels" aria-hidden="true"><span>Opaque</span><span>Transparency + blur</span></div>
+      <label for="transparency-slider">Drag to compare <span class="sr-only">opaque on the left and transparent on the right. Use the arrow keys to move the divider.</span></label>
+      <input id="transparency-slider" type="range" min="0" max="100" value="50" aria-controls="transparency-compare" />
+      <figcaption>Look at the contour lines: sharp outside the window, blurred behind the files. These are matching real app captures, with native Hyprland blur.</figcaption>
+    </figure>
+
+    <details class="toggle-demo reveal">
+      <summary>Watch the real transparency toggle <span>8 seconds · silent</span></summary>
+      <div class="frame recording">
+        <video controls playsinline preload="none" poster="/media/l/transparency.jpg" aria-label="HyprFM switching between opaque and transparent panels using Ctrl+Shift+B">
+          <source src="/media/l/transparency.mp4" type="video/mp4" />
+          <p><a href="/media/l/transparency.mp4">Watch the transparency demo.</a></p>
+        </video>
+      </div>
+      <p>The recording toggles blur-backed transparency on, holds, then returns to opaque panels.</p>
+    </details>
+    <details class="blur-setup reveal">
+      <summary>Set up transparency and blur</summary>
+      <div class="setup-grid">
+        <div>
+          <h3>1. Enable transparency in HyprFM</h3>
+          <p>Use Settings, press <kbd>Ctrl+Shift+B</kbd>, or edit <code>config.toml</code>.</p>
+          <pre><code>[appearance]
+transparency_enabled = true</code></pre>
+        </div>
+        <div>
+          <h3>2. Enable blur in Hyprland</h3>
+          <p>The compositor blurs the backdrop. These are the settings used in this capture.</p>
+          <pre><code>{blurConfig}</code></pre>
+        </div>
+      </div>
+      <p class="setup-note">On KDE Plasma, HyprFM also supports native KWin blur.</p>
+    </details>
+  </div>
+</section>
+
+<script>
+  const slider = document.querySelector<HTMLInputElement>('#transparency-slider')!;
+  const comparison = document.querySelector<HTMLElement>('#transparency-compare')!;
+  function updateComparison() {
+    comparison.style.setProperty('--split', `${slider.value}%`);
+  }
+  slider.addEventListener('input', updateComparison);
+  function moveDivider(event: PointerEvent) {
+    const bounds = comparison.getBoundingClientRect();
+    slider.value = String(Math.max(0, Math.min(100, (event.clientX - bounds.left) / bounds.width * 100)));
+    updateComparison();
+  }
+  comparison.addEventListener('pointerdown', (event) => {
+    if (!event.isPrimary || event.button !== 0) return;
+    comparison.setPointerCapture(event.pointerId);
+    moveDivider(event);
+  });
+  comparison.addEventListener('pointermove', (event) => {
+    if (comparison.hasPointerCapture(event.pointerId)) moveDivider(event);
+  });
+</script>
+
+<style>
+  .transparency { background: color-mix(in srgb, var(--mantle) 45%, var(--page)); border-block: 1px solid var(--line); }
+  .intro { display: grid; gap: 18px; max-width: 760px; margin-bottom: 32px; }
+  .intro .lede { max-width: 68ch; }
+  kbd { color: var(--text); font-size: .85em; white-space: nowrap; }
+  figure { margin: 0; }
+  .comparison { aspect-ratio: 16 / 10; cursor: ew-resize; touch-action: pan-y; }
+  .comparison > img { position: absolute; inset: 0; pointer-events: none; user-select: none; }
+  .transparent { clip-path: inset(0 0 0 var(--split)); }
+  .divider { position: absolute; inset-block: 0; left: var(--split); width: 2px; background: var(--accent); pointer-events: none; }
+  .divider > span { position: absolute; top: 50%; left: -19px; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--accent); border-radius: 50%; background: var(--crust); color: var(--text); font-size: 22px; }
+  .comparison-labels { display: flex; justify-content: space-between; gap: 16px; margin-top: 20px; font: 600 12px/1.5 var(--mono); color: var(--subtext); }
+  label { display: block; font-size: 14px; color: var(--subtext); text-align: center; margin-top: 12px; }
+  input { display: block; width: 100%; min-height: 44px; margin: 0 0 10px; accent-color: var(--accent); cursor: ew-resize; }
+  figcaption, .toggle-demo p { font-size: 14px; color: var(--subtext); }
+  .toggle-demo { margin-top: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  summary { padding-block: 18px; cursor: pointer; font-weight: 600; }
+  summary span { display: inline-block; margin-left: 12px; font: 400 12px/1.5 var(--mono); color: var(--subtext); }
+  .recording { aspect-ratio: 16 / 10; margin: 4px 0 18px; }
+  .toggle-demo p { margin-bottom: 20px; }
+  .blur-setup { border-bottom: 1px solid var(--line); }
+  .setup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; padding: 8px 0 20px; }
+  .setup-grid > div { min-width: 0; }
+  h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .setup-grid p, .setup-note { color: var(--subtext); font-size: 13px; }
+  pre { margin: 16px 0 0; padding: 16px; background: var(--crust); border: 1px solid var(--line); border-radius: 5px; font-size: 12px; line-height: 1.7; overflow-x: auto; }
+  .setup-note { margin-bottom: 20px; }
+  @media (max-width: 768px) { .setup-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+  @media (max-width: 600px) { summary span { display: block; margin: 5px 0 0 18px; } }
+</style>

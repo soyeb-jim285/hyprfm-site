@@ -7,17 +7,13 @@ const split = (k: string) => k.split('+').filter(Boolean);
 
 <section class="section cheats" id="shortcuts">
   <div class="shell">
-    <div class="section-head reveal">
-      <div>
-        <span class="eyebrow">{shortcuts.length} defaults · all rebindable</span>
-        <h2 class="h-section">The whole <em>keyboard</em>, on one page.</h2>
-      </div>
+    <details class="reference reveal">
+      <summary>Keyboard reference <span>{shortcuts.length} shortcuts</span></summary>
       <div class="find">
         <label for="sc-q" class="sr-only">Filter shortcuts</label>
         <input id="sc-q" type="search" placeholder="Filter: rename, tab, split…" autocomplete="off" spellcheck="false" />
         <p class="lede">The same list as HyprFM’s own Ctrl+? dialog.</p>
       </div>
-    </div>
     <div class="cols reveal">
       {groups.map(({ g, items }) => (
         <div class="col">
@@ -34,6 +30,7 @@ const split = (k: string) => k.split('+').filter(Boolean);
       ))}
     </div>
     <p class="none" id="sc-none" hidden>No shortcut matches that. Every action is listed in config.toml, too.</p>
+    </details>
   </div>
 </section>
 
@@ -52,15 +49,19 @@ const split = (k: string) => k.split('+').filter(Boolean);
 </script>
 
 <style>
-  .find { display: grid; gap: 12px; }
+  .cheats { padding-block: 24px; }
+  .reference { border-block: 1px solid var(--line); }
+  summary { padding-block: 22px; cursor: pointer; font-size: 20px; font-weight: 600; letter-spacing: -.025em; }
+  summary > span { margin-left: 16px; font: 400 12px var(--mono); color: var(--subtext); letter-spacing: 0; }
+  .find { display: grid; gap: 12px; max-width: 500px; margin: 8px 0 32px; }
   input { width: 100%; font: 15px var(--mono); color: var(--text); background: var(--mantle); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
-  input::placeholder { color: var(--muted); }
+  input::placeholder { color: var(--subtext); }
   input:focus { outline: none; border-color: var(--accent); }
   .cols { columns: 3 300px; column-gap: 36px; }
   .col { break-inside: avoid; margin-bottom: 30px; }
-  h3 { font: 600 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  h3 { font: 500 13px var(--mono); color: var(--text); margin-bottom: 8px; }
   ul { list-style: none; margin: 0; padding: 0; }
   li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent); font-size: 15px; color: var(--subtext); }
   li .keys { font-size: 12px; flex: none; }
-  .none { color: var(--muted); }
+  .none { color: var(--subtext); }
 </style>
